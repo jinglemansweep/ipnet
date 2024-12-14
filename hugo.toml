@@ -1,4 +1,4 @@
 baseURL = 'https://jinglemansweep.github.io/ipnet/'
 languageCode = 'en-gb'
-title = 'IPNet - Ipswich Network'
-theme = 'ananke'
+title = 'Ipswich Mesh'
+theme = 'PaperMod'
