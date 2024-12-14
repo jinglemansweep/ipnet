@@ -43,6 +43,6 @@ params:
   showShareButtons: true
   ShareButtons: ["twitter", "reddit", "linkedin", "facebook", "whatsapp", "telegram"] 
   editPost:
-    URL: "https://github.com/jinglemansweep/ipnet/tree/main/content"
+    URL: "https://github.com/jinglemansweep/ipnet/tree/main/web/content"
     Text: "Suggest Changes"
     appendFilePath: true
