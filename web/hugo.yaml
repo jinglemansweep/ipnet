@@ -1,0 +1,48 @@
+baseURL: /
+languageCode: en-gb
+title: Ipswich Mesh Network
+theme: PaperMod
+copyright: "© Ipswich Mesh Network"
+paginate: 5
+
+outputs:
+  home: ["HTML", "RSS", "JSON"]
+  section: ["HTML", "RSS"]
+  taxonomy:
+    tag: "tags"
+    category: "categories"
+
+enableInlineShortcodes: true
+enableRobotsTXT: true
+buildDrafts: false
+buildFuture: false
+buildExpired: false
+enableEmoji: true
+pygmentsUseClasses: true
+mainsections:
+  - posts
+  - papermod
+
+menus:
+  main:
+    - name: "Home"
+      url: "/"
+      weight: 10
+    - name: "Nodes"
+      url: "/nodes/"
+      weight: 20
+    - name: "Search"
+      url: "/search/"
+      weight: 30
+    - name: "GitHub"
+      url: "https://github.com/jinglemansweep/ipnet"
+      weight: 40
+      
+    
+params:
+  showShareButtons: true
+  ShareButtons: ["twitter", "reddit", "linkedin", "facebook", "whatsapp", "telegram"] 
+  editPost:
+    URL: "https://github.com/jinglemansweep/ipnet/tree/main/content"
+    Text: "Suggest Changes"
+    appendFilePath: true
