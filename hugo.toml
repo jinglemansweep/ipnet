@@ -1,0 +1,4 @@
+baseURL = 'https://ipnt.uk/'
+languageCode = 'en-gb'
+title = 'IPNet - Ipswich Network'
+theme = 'ananke'
