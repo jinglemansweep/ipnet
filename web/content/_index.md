@@ -1,3 +1,5 @@
+# Ipswich Meshtastic Network
+
 Welcome to the home of a new [Meshtastic](https://meshtastic.org/) mesh network in Ipswich, Suffolk, UK which runs legally on the EU 868MHz (`EU_868`) frequency using the default `LongFast` profile.
 
 IPNet is a community network that is open to all users for emergency messaging, location tracking, IoT sensors and more. 

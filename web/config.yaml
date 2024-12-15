@@ -1,8 +1,8 @@
 baseURL: /
 languageCode: en-gb
-title: Ipswich Mesh Network
+title: IPNet
 theme: PaperMod
-copyright: "© Ipswich Mesh Network"
+copyright: "© IPNet"
 paginate: 5
 
 outputs:
