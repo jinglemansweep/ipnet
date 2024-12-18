@@ -31,8 +31,8 @@ menus:
     - name: "Nodes"
       url: "/nodes/"
       weight: 20
-    - name: "Search"
-      url: "/search/"
+    - name: "Resources"
+      url: "/resources/"
       weight: 30
     - name: "GitHub"
       url: "https://github.com/jinglemansweep/ipnet"
