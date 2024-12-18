@@ -1,6 +1,6 @@
 # Ipswich Mesh Network (IPNet)
 
-[![GitHub Pages](https://github.com/jinglemansweep/ipnet/actions/workflows/hugo.yaml/badge.svg)](https://github.com/jinglemansweep/ipnet/actions/workflows/hugo.yaml)
+[![GitHub Pages](https://github.com/jinglemansweep/ipnet/actions/workflows/hugo.yaml/badge.svg)](https://github.com/jinglemansweep/ipnet/actions/workflows/hugo.yaml) [![Meshtastic CLI Docker Image](https://github.com/jinglemansweep/ipnet/actions/workflows/docker-meshtastic-cli.yml/badge.svg)](https://github.com/jinglemansweep/ipnet/actions/workflows/docker-meshtastic-cli.yml)
 
 Website: [ipnt.uk](https://ipnt.uk)
 
