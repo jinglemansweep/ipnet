@@ -8,10 +8,10 @@ There are several primary nodes that form the core of the Ipswich Mesh Network. 
 
 | Name | Type    | Location                                                                      | Device                                                   | Identifiers              |
 |------|---------|-------------------------------------------------------------------------------|----------------------------------------------------------|--------------------------|
-| IP2A | Fixed   | [Fountains Road, IP2](https://meshtastic.liamcottle.net/?node_id=1128031880)  | [Heltec v3](https://heltec.org/project/wifi-lora-32-v3/) | !433c74f8 *(1128035576)* |
-| IP2B | Roaming | [Various](https://meshtastic.liamcottle.net/?node_id=1128035576)              | [Heltec v3](https://heltec.org/project/wifi-lora-32-v3/) | !433c6688 *(1128031880)* |
-| IP2C | Fixed   | [Belstead Road, IP2](https://meshtastic.liamcottle.net/?node_id=2086288176)   | [Heltec v3](https://heltec.org/project/wifi-lora-32-v3/) | !7c5a3b30 *(2086288176)*           |
-| IP2D | Fixed   | [Birkfield Drive, IP2](https://meshtastic.liamcottle.net/?node_id=2086342028) | [Heltec v3](https://heltec.org/project/wifi-lora-32-v3/) | !7c5b0d8c *(2086342028)*           |
+| IP2A | Fixed   | [Fountains Road, IP2](https://meshtastic.liamcottle.net/?node_id=1128035576)  | [Heltec v3](https://heltec.org/project/wifi-lora-32-v3/) | !433c74f8 *(1128035576)* |
+| IP2B | Roaming | [Various](https://meshtastic.liamcottle.net/?node_id=1128031880)              | [Heltec v3](https://heltec.org/project/wifi-lora-32-v3/) | !433c6688 *(1128031880)* |
+| IP2C | Fixed   | [Belstead Road, IP2](https://meshtastic.liamcottle.net/?node_id=2086288176)   | [Heltec v3](https://heltec.org/project/wifi-lora-32-v3/) | !7c5a3b30 *(2086288176)* |
+| IP2D | Fixed   | [Birkfield Drive, IP2](https://meshtastic.liamcottle.net/?node_id=2086342028) | [Heltec v3](https://heltec.org/project/wifi-lora-32-v3/) | !7c5b0d8c *(2086342028)* |
 
 Some unofficial "personal" nodes are also available:
 
