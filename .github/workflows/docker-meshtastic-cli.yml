@@ -2,6 +2,8 @@ name: Meshtastic CLI Docker Image
 
 on:
   push:
+    paths:
+      - "docker/meshtastic-cli/**"
     branches:
       - main
     tags:
