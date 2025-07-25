@@ -4,8 +4,7 @@
 
 Welcome to the home of the [MeshCore](https://meshcore.co.uk/) mesh network in Ipswich, Suffolk, UK which runs legally on the EU/UK 869.525MHz frequency.
 
-IPNet is a community nResourcesetwork that is open to all users for emergency messaging, location tracking, IoT sensors and more. 
-The network is entirely non-profit and is run on hardware that is owned and managed by the community.
+IPNet is a community network that is open to all users for emergency messaging, location tracking, IoT sensors and more. The network is entirely non-profit and is run on hardware that is owned and managed by the community.
 
 MeshCore uses [LoRa](https://en.wikipedia.org/wiki/LoRa), a low-power, long-range radio system to send small packets of information like simple text messages, sensor values, GPS coordinates etc.
 
