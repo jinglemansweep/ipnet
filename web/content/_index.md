@@ -12,4 +12,4 @@ It does not rely on mobile cellular networks or WiFi for operation, so is perfec
 
 New nodes can join the mesh if in range of an existing node. Ideally new nodes should be located in high areas (e.g. top of hills) and nodes and antennae should be installed as high as possible in properties (e.g. roof, loft, etc).
 
-Feel free to contact us at [info@ipnt.uk](mailto:info@ipnt.uk?subject=Query) for further information.
+Feel free to contact us on our [Discord](https://discord.gg/hXRM2cJgtf) server or via email at [info@ipnt.uk](mailto:info@ipnt.uk?subject=Query) for further information.
