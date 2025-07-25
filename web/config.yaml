@@ -29,8 +29,8 @@ menus:
     - name: "Nodes"
       url: "/nodes/"
       weight: 20
-    - name: "Resources"
-      url: "/resources/"
+    - name: "Meshtastic"
+      url: "/meshtastic/"
       weight: 30
     - name: "GitHub"
       url: "https://github.com/jinglemansweep/ipnet"
