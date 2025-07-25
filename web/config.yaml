@@ -32,9 +32,12 @@ menus:
     - name: "Meshtastic"
       url: "/meshtastic/"
       weight: 30
+    - name: "Discord"
+      url: "https://discord.gg/hXRM2cJgtf"
+      weight: 40
     - name: "GitHub"
       url: "https://github.com/jinglemansweep/ipnet"
-      weight: 40
+      weight: 50
       
     
 params:
