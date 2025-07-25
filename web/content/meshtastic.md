@@ -1,8 +1,12 @@
 ---
-title: "Meshtatic"
+title: "Meshtastic"
 date: 2025-07-25T15:17:45+01:00
 draft: false
 ---
+
+The IPNet network previously ran on the [Meshtastic](https://meshtastic.org/) platform, which is a popular open-source project for creating long-range mesh networks using LoRa devices. However, the network has since transitioned to the [MeshCore](https://meshcore.co.uk/) platform, which offers enhanced features and support.
+
+We will maintain this page for reference, but please note that the information may be outdated.
 
 ## Meshtastic CLI Docker Image
 
