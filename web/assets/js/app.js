@@ -83,6 +83,7 @@ function nodesData() {
         filteredNodes: [],
         selectedHardware: '',
         selectedRole: '',
+        selectedOwner: '',
         showOnlineOnly: false,
         mapInitialized: false,
         map: null,
@@ -102,6 +103,10 @@ function nodesData() {
         
         get availableHardware() {
             return [...new Set(this.nodes.map(node => node.hardware))];
+        },
+        
+        get availableOwners() {
+            return [...new Set(this.nodes.map(node => node.memberId))].sort();
         },
         
         get onlineNodesCount() {
@@ -165,9 +170,11 @@ function nodesData() {
                     node.hardware.toLowerCase().includes(this.selectedHardware.toLowerCase());
                 const roleMatch = !this.selectedRole || 
                     node.meshRole === this.selectedRole;
+                const ownerMatch = !this.selectedOwner || 
+                    node.memberId === this.selectedOwner;
                 const onlineMatch = !this.showOnlineOnly || node.isOnline !== false;
                 
-                return hardwareMatch && roleMatch && onlineMatch;
+                return hardwareMatch && roleMatch && ownerMatch && onlineMatch;
             });
             
             this.updateMapMarkers();

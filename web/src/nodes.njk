@@ -38,6 +38,16 @@ extraScripts: |
                     <option value="">All</option>
                     <option value="client">Client</option>
                     <option value="repeater">Repeater</option>
+                    <option value="room">Room</option>
+                </select>
+            </div>
+            <div class="flex items-center space-x-2">
+                <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Maintainer:</label>
+                <select x-model="selectedOwner" @change="applyFilters()" class="form-select text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-md">
+                    <option value="">All</option>
+                    <template x-for="owner in availableOwners" :key="owner">
+                        <option :value="owner" x-text="owner.toUpperCase()"></option>
+                    </template>
                 </select>
             </div>
             <div class="flex items-center space-x-2">
