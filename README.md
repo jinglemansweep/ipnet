@@ -1,5 +1,7 @@
 # IPNet - Ipswich Mesh Network
 
+[![Deploy to GitHub Pages](https://github.com/jinglemansweep/ipnet-beta/actions/workflows/deploy.yml/badge.svg)](https://github.com/jinglemansweep/ipnet-beta/actions/workflows/deploy.yml)
+
 Local MeshCore community group serving Ipswich, Suffolk, UK. Built with Eleventy (11ty) static site generator.
 
 ## Development
