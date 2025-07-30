@@ -24,8 +24,8 @@ Runs Eleventy with live reload at `http://localhost:8080`
 # Local build (no path prefix)
 npm run build
 
-# GitHub Pages build (with /ipnet-beta prefix)
-npm run build:github
+# Remote build (with path prefix)
+PATH_PREFIX=/ipnet npm run build
 
 # Clean build directory
 npm run clean
@@ -36,10 +36,10 @@ npm run clean
 ### GitHub Pages
 The site automatically deploys to GitHub Pages via GitHub Actions when pushing to the `main` branch.
 
-**Deployed URL**: `https://jinglemansweep.github.io/ipnet-beta/`
+**Deployed URL**: `https://www.ipnt.uk`
 
 The GitHub Actions workflow:
-1. Builds the site with `PATH_PREFIX=/ipnet-beta`
+1. Builds the site with `PATH_PREFIX=/ipnet`
 2. Deploys to the `gh-pages` branch
 3. Serves via GitHub Pages
 
@@ -47,7 +47,7 @@ The GitHub Actions workflow:
 The site supports customizable path prefixes for deployment on subdirectories:
 
 - **Local development**: No prefix (`/`)
-- **GitHub Pages**: `/ipnet-beta` (or `/<repo-name>`)
+- **GitHub Pages**: `/ipnet` (or `/<repo-name>`)
 - **Custom deployment**: Set `PATH_PREFIX` environment variable
 
 #### How Path Prefixes Work
