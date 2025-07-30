@@ -1,0 +1,113 @@
+{
+  "lastUpdated": "2025-07-29T12:00:00Z",
+  "nodes": [
+    {
+      "id": "rep01.ip2.ipnet.uk",
+      "name": "IP2 Repeater 1",
+      "memberId": "louis",
+      "area": "IP2",
+      "location": {
+        "lat": 52.0354539,
+        "lng": 1.1295338,
+        "description": "Fountains Road"
+      },
+      "hardware": "Heltec V3",
+      "antenna": "Paradar 8.5dBi omni",
+      "elevation": 120,
+      "isPublic": true,
+      "isOnline": true,
+      "meshRole": "repeater",
+      "channels": []
+    },
+    {
+      "id": "rep02.ip2.ipnet.uk",
+      "name": "IP2 Repeater 2",
+      "memberId": "louis",
+      "area": "IP2",
+      "location": {
+        "lat": 52.0390682,
+        "lng": 1.1304141,
+        "description": "Belstead Road"
+      },
+      "hardware": "Heltec V3",
+      "antenna": "Generic 5dBi Whip",
+      "elevation": 120,
+      "isPublic": true,
+      "isOnline": true,
+      "meshRole": "repeater",
+      "channels": []
+    },
+    {
+      "id": "rep03.ip2.ipnet.uk",
+      "name": "IP2 Repeater 3",
+      "memberId": "louis",
+      "area": "IP2",
+      "location": {
+        "lat": 52.046356,
+        "lng": 1.134661,
+        "description": "Birkfield Drive"
+      },
+      "hardware": "Heltec V3",
+      "antenna": "Paradar 8.5dBi omni",
+      "elevation": 120,
+      "isPublic": true,
+      "isOnline": true,
+      "meshRole": "repeater",
+      "channels": []
+    },
+    {
+      "id": "rep01.ip3.ipnet.uk",
+      "name": "IP3 Repeater 1",
+      "memberId": "tbe",
+      "area": "IP3",
+      "location": {
+        "lat": 52.0458,
+        "lng": 1.20441,
+        "description": "Brokehall"
+      },
+      "hardware": "Heltec V3",
+      "antenna": "Unknown",
+      "elevation": 120,
+      "isPublic": true,
+      "isOnline": true,
+      "meshRole": "repeater",
+      "channels": []
+    },
+    {
+      "id": "rep02.ip3.ipnet.uk",
+      "name": "IP3 Repeater 2",
+      "memberId": "ccz",
+      "area": "IP3",
+      "location": {
+        "lat": 52.03297,
+        "lng": 1.17543,
+        "description": "Morland Road Allotments"
+      },
+      "hardware": "Heltec V3",
+      "antenna": "Unknown",
+      "elevation": 120,
+      "isPublic": true,
+      "isOnline": true,
+      "meshRole": "repeater",
+      "channels": []
+    },
+    {
+      "id": "rep03.ip3.ipnet.uk",
+      "name": "IP3 Repeater 3",
+      "memberId": "ccz",
+      "area": "IP3",
+      "location": {
+        "lat": 52.04499,
+        "lng": 1.18149,
+        "description": "Hatfield Road"
+      },
+      "hardware": "Heltec V3",
+      "antenna": "Unknown",
+      "elevation": 120,
+      "isPublic": true,
+      "isOnline": true,
+      "meshRole": "repeater",
+      "channels": []
+    } 
+  ]
+}

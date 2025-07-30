@@ -1,0 +1,47 @@
+{
+  "lastUpdated": "2025-07-29T12:00:00Z",
+  "members": [
+    {
+      "id": "louis",
+      "name": "Louis",
+      "joinDate": "2025-07-01",
+      "location": "Ipswich",
+      "avatar": "/assets/images/avatars/jinglemansweep.jpg",
+      "bio": "DevOps, Geek, and Mesh Networking enthusiast. Founder of IPNet.",
+      "contactPreference": "discord",
+      "isPublic": true,
+      "socialLinks": {
+        "github": "jinglemansweep",
+        "twitter": ""
+      }
+    },
+    {
+      "id": "tbe",
+      "name": "TBE",
+      "joinDate": "2025-07-01",
+      "location": "Ipswich",
+      "avatar": "/assets/images/avatars/tbe.jpg",
+      "bio": "",
+      "contactPreference": "discord",
+      "isPublic": true,
+      "socialLinks": {
+        "github": "",
+        "twitter": ""
+      }
+    },
+    {
+      "id": "ccz",
+      "name": "CCZ",
+      "joinDate": "2025-07-01",
+      "location": "Ipswich",
+      "avatar": "/assets/images/avatars/ccz.jpg",
+      "bio": "",
+      "contactPreference": "discord",
+      "isPublic": true,
+      "socialLinks": {
+        "github": "",
+        "twitter": ""
+      }
+    }
+  ]
+}

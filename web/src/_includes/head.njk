@@ -1,0 +1,53 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="path-prefix" content="{{ pathPrefix }}">
+    <title>{{ title or "IPNet - Ipswich Mesh Network" }}</title>
+    <meta name="description" content="{{ description or "Local MeshCore community group serving Ipswich, Suffolk. Join our mesh network and connect with local enthusiasts." }}">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ipnt.uk/">
+    <meta property="og:title" content="{{ title or "IPNet" }}">
+    <meta property="og:description" content="{{ description or "Local MeshCore community group for Ipswich, Suffolk, UK" }}">
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://ipnt.uk/">
+    <meta property="twitter:title" content="{{ title or "IPNet" }}">
+    <meta property="twitter:description" content="{{ description or "Local MeshCore community group for Ipswich, Suffolk, UK" }}">
+    <link rel="canonical" href="https://ipnt.uk/">
+    <link rel="icon" href="{{ '/assets/images/favicon.ico' | url }}">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#10b981',
+                        secondary: '#6b7280',
+                        accent: '#3b82f6'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Prevent flash of light theme -->
+    <script>
+        // Apply dark theme immediately to prevent flash
+        (function() {
+            const isDark = localStorage.getItem('darkMode') !== 'false' && 
+                          (localStorage.getItem('darkMode') === 'true' || !localStorage.getItem('darkMode'));
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+    
+    <!-- Alpine.js -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ '/assets/css/custom.css' | url }}">
+    
+    {{ extraHead | safe }}
+</head>

@@ -1,0 +1,35 @@
+{
+  "siteName": "IPNet - Ipswich Mesh Network",
+  "shortName": "IPNet",
+  "description": "Local MeshCore community group serving Ipswich, Suffolk, UK",
+  "location": {
+    "city": "Ipswich",
+    "region": "Suffolk",
+    "country": "United Kingdom",
+    "center": {
+      "lat": 52.05917,
+      "lng": 1.15545
+    },
+    "zoom": 12
+  },
+  "contact": {
+    "email": "info@ipnt.uk",
+    "discord": "https://discord.gg/hXRM2cJgtf",
+    "github": "https://github.com/jinglemansweep/ipet"
+  },
+  "social": {
+    "twitter": "",
+    "facebook": ""
+  },
+  "theme": {
+    "primaryColor": "#10b981",
+    "secondaryColor": "#6b7280",
+    "accentColor": "#3b82f6"
+  },
+  "features": {
+    "darkMode": true,
+    "mapClustering": true,
+    "memberProfiles": true,
+    "nodeStatistics": true
+  }
+}
