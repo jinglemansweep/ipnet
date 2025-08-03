@@ -85,6 +85,7 @@ function nodesData() {
         selectedRole: '',
         selectedOwner: '',
         showOnlineOnly: false,
+        showTesting: false,
         mapInitialized: false,
         map: null,
         markers: [],
@@ -94,7 +95,7 @@ function nodesData() {
             const data = await loadData();
             this.nodes = data.nodes;
             this.members = data.members;
-            this.filteredNodes = [...this.nodes];
+            this.applyFilters();
             
             // Initialize map after DOM is ready
             this.$nextTick(() => {
@@ -291,7 +292,8 @@ function nodesData() {
                 const ownerMatch = !this.selectedOwner || 
                     node.memberId === this.selectedOwner;
                 const onlineMatch = !this.showOnlineOnly || node.isOnline !== false;
-                return hardwareMatch && roleMatch && ownerMatch && onlineMatch;
+                const testingMatch = this.showTesting || node.isTesting !== true;
+                return hardwareMatch && roleMatch && ownerMatch && onlineMatch && testingMatch;
             });
             
             this.updateMapMarkers();

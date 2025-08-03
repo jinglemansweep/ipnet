@@ -61,6 +61,10 @@ extraScripts: |
                 <input type="checkbox" x-model="showOnlineOnly" @change="applyFilters()" id="onlineOnly" class="form-checkbox text-primary border-gray-300 dark:border-gray-600 rounded">
                 <label for="onlineOnly" class="text-sm font-medium text-gray-700 dark:text-gray-300">Online only</label>
             </div>
+            <div class="flex items-center space-x-2">
+                <input type="checkbox" x-model="showTesting" @change="applyFilters()" id="showTesting" class="form-checkbox text-primary border-gray-300 dark:border-gray-600 rounded">
+                <label for="showTesting" class="text-sm font-medium text-gray-700 dark:text-gray-300">Show testing nodes</label>
+            </div>
         </div>
     </div>
 </div>
