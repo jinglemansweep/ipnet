@@ -303,3 +303,93 @@ select:focus {
 .space-x-05 > :not([hidden]) ~ :not([hidden]) {
     margin-left: 0.125rem;
 }
+
+/* Custom marker cluster styles */
+.marker-cluster-small {
+    background-color: rgba(16, 185, 129, 0.2);
+    border: 2px solid #10b981;
+    color: #065f46;
+    font-weight: 600;
+}
+
+.marker-cluster-small div {
+    background-color: rgba(16, 185, 129, 0.4);
+    border-radius: 15px;
+}
+
+.marker-cluster-medium {
+    background-color: rgba(59, 130, 246, 0.2);
+    border: 2px solid #3b82f6;
+    color: #1e3a8a;
+    font-weight: 600;
+}
+
+.marker-cluster-medium div {
+    background-color: rgba(59, 130, 246, 0.4);
+    border-radius: 20px;
+}
+
+.marker-cluster-large {
+    background-color: rgba(239, 68, 68, 0.2);
+    border: 2px solid #ef4444;
+    color: #7f1d1d;
+    font-weight: 600;
+}
+
+.marker-cluster-large div {
+    background-color: rgba(239, 68, 68, 0.4);
+    border-radius: 25px;
+}
+
+/* Dark mode cluster styles */
+.dark .marker-cluster-small {
+    background-color: rgba(16, 185, 129, 0.3);
+    color: #6ee7b7;
+}
+
+.dark .marker-cluster-small div {
+    background-color: rgba(16, 185, 129, 0.6);
+}
+
+.dark .marker-cluster-medium {
+    background-color: rgba(59, 130, 246, 0.3);
+    color: #93c5fd;
+}
+
+.dark .marker-cluster-medium div {
+    background-color: rgba(59, 130, 246, 0.6);
+}
+
+.dark .marker-cluster-large {
+    background-color: rgba(239, 68, 68, 0.3);
+    color: #fca5a5;
+}
+
+.dark .marker-cluster-large div {
+    background-color: rgba(239, 68, 68, 0.6);
+}
+
+/* Custom marker styles */
+.custom-marker {
+    background: transparent;
+    border: none;
+}
+
+/* Map popup styles */
+.leaflet-popup-content-wrapper {
+    border-radius: 8px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.dark .leaflet-popup-content-wrapper {
+    background-color: #374151;
+    color: #f9fafb;
+}
+
+.leaflet-popup-tip {
+    background-color: white;
+}
+
+.dark .leaflet-popup-tip {
+    background-color: #374151;
+}

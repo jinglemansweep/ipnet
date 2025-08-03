@@ -88,6 +88,7 @@ function nodesData() {
         mapInitialized: false,
         map: null,
         markers: [],
+        markerClusterGroup: null,
         
         async init() {
             const data = await loadData();
@@ -97,7 +98,9 @@ function nodesData() {
             
             // Initialize map after DOM is ready
             this.$nextTick(() => {
-                this.initMap();
+                setTimeout(() => {
+                    this.initMap();
+                }, 100);
             });
         },
         
@@ -126,9 +129,22 @@ function nodesData() {
         initMap() {
             if (this.mapInitialized || typeof L === 'undefined') return;
             
-            // Default center
-            const center = config.location?.center || { lat: 52.05917, lng: 1.15545 };
-            const zoom = config.location?.zoom || 11;
+            // Calculate bounds from filtered nodes
+            const nodesWithLocation = this.filteredNodes.filter(node => 
+                node.showOnMap && node.location && node.location.lat && node.location.lng
+            );
+            
+            let center, zoom;
+            if (nodesWithLocation.length > 0) {
+                const bounds = L.latLngBounds(nodesWithLocation.map(node => [node.location.lat, node.location.lng]));
+                center = bounds.getCenter();
+                // Calculate appropriate zoom level
+                zoom = nodesWithLocation.length === 1 ? 13 : 11;
+            } else {
+                // Fallback to config or default
+                center = config.location?.center || { lat: 52.05917, lng: 1.15545 };
+                zoom = config.location?.zoom || 11;
+            }
             
             this.map = L.map('nodesMap').setView([center.lat, center.lng], zoom);
             
@@ -136,31 +152,133 @@ function nodesData() {
                 attribution: '© OpenStreetMap contributors'
             }).addTo(this.map);
             
-            this.updateMapMarkers();
             this.mapInitialized = true;
+            
+            // Wait for map to be ready before initializing cluster group
+            this.map.whenReady(() => {
+                // Add a small delay to ensure everything is fully initialized
+                setTimeout(() => {
+                    // Initialize marker cluster group after map is ready
+                    if (typeof L.markerClusterGroup !== 'undefined') {
+                        this.markerClusterGroup = L.markerClusterGroup({
+                            chunkedLoading: true,
+                            maxClusterRadius: 50,
+                            spiderfyOnMaxZoom: false, // Disable spiderfy to avoid map access issues
+                            showCoverageOnHover: false,
+                            zoomToBoundsOnClick: false, // Disable zoom to bounds to prevent map access issues
+                            disableClusteringAtZoom: 16, // Disable clustering at high zoom levels
+                            animate: false // Disable animations to prevent timing issues
+                        });
+                        this.map.addLayer(this.markerClusterGroup);
+                        
+                        // Add custom cluster click handler to avoid zoom issues
+                        this.markerClusterGroup.on('clusterclick', (e) => {
+                            try {
+                                // Simple zoom in instead of bounds fitting
+                                const currentZoom = this.map.getZoom();
+                                if (currentZoom < 15) {
+                                    this.map.setView(e.latlng, currentZoom + 2);
+                                }
+                            } catch (error) {
+                                console.warn('Error handling cluster click:', error);
+                            }
+                        });
+                    }
+                    
+                    this.updateMapMarkers();
+                    this.fitMapToNodes();
+                }, 100);
+            });
+        },
+        
+        fitMapToNodes() {
+            if (!this.map) return;
+            
+            const nodesWithLocation = this.filteredNodes.filter(node => 
+                node.showOnMap && node.location && node.location.lat && node.location.lng
+            );
+            
+            if (nodesWithLocation.length > 1) {
+                try {
+                    const bounds = L.latLngBounds(nodesWithLocation.map(node => [node.location.lat, node.location.lng]));
+                    this.map.fitBounds(bounds, { padding: [20, 20], maxZoom: 13 });
+                } catch (error) {
+                    console.warn('Error fitting map to nodes:', error);
+                }
+            } else if (nodesWithLocation.length === 1) {
+                const node = nodesWithLocation[0];
+                this.map.setView([node.location.lat, node.location.lng], 13);
+            }
         },
         
         updateMapMarkers() {
             if (!this.map) return;
             
-            // Clear existing markers
-            this.markers.forEach(marker => this.map.removeLayer(marker));
-            this.markers = [];
+            try {
+                // Clear existing markers
+                if (this.markerClusterGroup) {
+                    this.markerClusterGroup.clearLayers();
+                } else {
+                    this.markers.forEach(marker => {
+                        if (this.map.hasLayer(marker)) {
+                            this.map.removeLayer(marker);
+                        }
+                    });
+                }
+                this.markers = [];
+            } catch (error) {
+                console.warn('Error clearing markers:', error);
+                this.markers = [];
+            }
             
             // Add markers for filtered nodes
             this.filteredNodes.forEach(node => {
-                const marker = L.marker([node.location.lat, node.location.lng])
-                    .bindPopup(`
-                        <strong>${node.name}</strong><br>
-                        ${node.location.description}<br>
-                        <em>ID:</em> ${node.id}<br>
-                        <em>Hardware:</em> ${node.hardware}<br>
-                        <em>Role:</em> ${node.meshRole}<br>
-                        <em>Elevation:</em> ${node.elevation}m
-                    `);
+                if (!node.showOnMap || !node.location || !node.location.lat || !node.location.lng) return;
+                
+                try {
+                    // Create status indicator icon
+                    const statusColor = node.isOnline !== false ? '#10b981' : '#ef4444';
+                    const customIcon = L.divIcon({
+                        html: `<div style="background-color: ${statusColor};" class="w-6 h-6 rounded-full border-2 border-white shadow-lg"></div>`,
+                        className: 'custom-marker',
+                        iconSize: [24, 24],
+                        iconAnchor: [12, 12]
+                    });
                     
-                marker.addTo(this.map);
-                this.markers.push(marker);
+                    const marker = L.marker([node.location.lat, node.location.lng], { icon: customIcon })
+                        .bindPopup(`
+                            <div class="max-w-xs">
+                                <strong class="text-lg">${node.location.description}, ${node.area}</strong><br>
+                                <div class="mt-2 space-y-1 text-sm">
+                                    <div><em>ID:</em> <code style="background-color: #f3f4f6; color: #1f2937; padding: 2px 4px; border-radius: 3px; font-size: 11px;">${node.id}</code></div>
+                                    <div><em>Name:</em> ${node.name}</div>
+                                    <div><em>Owner:</em> ${this.getMemberName(node.memberId)}</div>
+                                    <div><em>Hardware:</em> ${node.hardware}</div>
+                                    <div><em>Role:</em> ${node.meshRole}</div>
+                                    <div><em>Elevation:</em> ${node.elevation}m</div>
+                                    <div class="flex items-center mt-2">
+                                        <div class="w-2 h-2 rounded-full mr-2" style="background-color: ${statusColor}"></div>
+                                        <span class="font-medium">${node.isOnline !== false ? 'Online' : 'Offline'}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `, {
+                            closeOnClick: true,
+                            autoClose: true,
+                            closeButton: true
+                        });
+                    
+                    // Add to cluster group if available, otherwise directly to map
+                    if (this.markerClusterGroup) {
+                        this.markerClusterGroup.addLayer(marker);
+                    } else {
+                        marker.addTo(this.map);
+                    }
+                    
+                    this.markers.push(marker);
+                } catch (error) {
+                    console.warn('Error adding marker for node:', node.id, error);
+                }
             });
         },
         
@@ -173,11 +291,11 @@ function nodesData() {
                 const ownerMatch = !this.selectedOwner || 
                     node.memberId === this.selectedOwner;
                 const onlineMatch = !this.showOnlineOnly || node.isOnline !== false;
-                
                 return hardwareMatch && roleMatch && ownerMatch && onlineMatch;
             });
             
             this.updateMapMarkers();
+            this.fitMapToNodes();
         },
         
         getMemberName(memberId) {
