@@ -3,6 +3,7 @@
   "nodes": [
     {
       "id": "rep01.ip2.ipnet.uk",
+      "publicKey": "A0722F9DE381484DA5AAECDB61586171E2FC4A4714072BBF04FD8F09B4768DED",
       "name": "IP2 Repeater 1",
       "memberId": "louis",
       "area": "IP2",
@@ -14,6 +15,7 @@
       "hardware": "Heltec V3",
       "antenna": "Paradar 8.5dBi omni",
       "elevation": 120,
+      "showOnMap": true,
       "isPublic": true,
       "isOnline": true,
       "meshRole": "repeater",
@@ -21,6 +23,7 @@
     },
     {
       "id": "rep02.ip2.ipnet.uk",
+      "publicKey": "815EBCB3C74CC07BB37569E8C086CC4D4138948A1D4AEE1C51D57FEC071DDCC3",
       "name": "IP2 Repeater 2",
       "memberId": "louis",
       "area": "IP2",
@@ -32,6 +35,7 @@
       "hardware": "Heltec V3",
       "antenna": "Generic 5dBi Whip",
       "elevation": 120,
+      "showOnMap": true,
       "isPublic": true,
       "isOnline": true,
       "meshRole": "repeater",
@@ -39,6 +43,7 @@
     },
     {
       "id": "rep03.ip2.ipnet.uk",
+      "publicKey": "3DC903EC46BB61A837BBC5212BB6000ED93E13F3FE4A04B390A8AD80C7D5357A",
       "name": "IP2 Repeater 3",
       "memberId": "louis",
       "area": "IP2",
@@ -50,13 +55,35 @@
       "hardware": "Heltec V3",
       "antenna": "Paradar 8.5dBi omni",
       "elevation": 120,
+      "showOnMap": true,
+      "isPublic": true,
+      "isOnline": false,
+      "meshRole": "repeater",
+      "channels": []
+    },
+        {
+      "id": "int01.ip2.ipnet.uk",
+      "publicKey": "",
+      "name": "IP2 Integration 1",
+      "memberId": "louis",
+      "area": "IP2",
+      "location": {
+        "lat": 52.0354539,
+        "lng": 1.1295338,
+        "description": "Fountains Road"
+      },
+      "hardware": "Heltec V3",
+      "antenna": "Generic 5dBi Whip",
+      "elevation": 120,
+      "showOnMap": false,
       "isPublic": true,
       "isOnline": true,
-      "meshRole": "repeater",
+      "meshRole": "integration",
       "channels": []
     },
     {
       "id": "rep01.ip3.ipnet.uk",
+      "publicKey": "",
       "name": "IP3 Repeater 1",
       "memberId": "tbe",
       "area": "IP3",
@@ -68,6 +95,7 @@
       "hardware": "Heltec V3",
       "antenna": "Unknown",
       "elevation": 120,
+      "showOnMap": true,
       "isPublic": true,
       "isOnline": true,
       "meshRole": "repeater",
@@ -75,6 +103,7 @@
     },
     {
       "id": "rep02.ip3.ipnet.uk",
+      "publicKey": "",
       "name": "IP3 Repeater 2",
       "memberId": "ccz",
       "area": "IP3",
@@ -86,6 +115,7 @@
       "hardware": "Heltec V3",
       "antenna": "Unknown",
       "elevation": 120,
+      "showOnMap": true,
       "isPublic": true,
       "isOnline": true,
       "meshRole": "repeater",
@@ -93,6 +123,7 @@
     },
     {
       "id": "rep03.ip3.ipnet.uk",
+      "publicKey": "",
       "name": "IP3 Repeater 3",
       "memberId": "ccz",
       "area": "IP3",
@@ -104,10 +135,11 @@
       "hardware": "Heltec V3",
       "antenna": "Unknown",
       "elevation": 120,
+      "showOnMap": true,
       "isPublic": true,
       "isOnline": true,
       "meshRole": "repeater",
       "channels": []
-    } 
+    }
   ]
 }
