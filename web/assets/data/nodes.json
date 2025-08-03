@@ -2,7 +2,7 @@
   "lastUpdated": "2025-07-29T12:00:00Z",
   "nodes": [
     {
-      "id": "rep01.ip2.ipnet.uk",
+      "id": "rep01.ip2.ipnt.uk",
       "publicKey": "A0722F9DE381484DA5AAECDB61586171E2FC4A4714072BBF04FD8F09B4768DED",
       "name": "IP2 Repeater 1",
       "memberId": "louis",
@@ -18,11 +18,12 @@
       "showOnMap": true,
       "isPublic": true,
       "isOnline": true,
+      "isTesting": false,
       "meshRole": "repeater",
       "channels": []
     },
     {
-      "id": "rep02.ip2.ipnet.uk",
+      "id": "rep02.ip2.ipnt.uk",
       "publicKey": "815EBCB3C74CC07BB37569E8C086CC4D4138948A1D4AEE1C51D57FEC071DDCC3",
       "name": "IP2 Repeater 2",
       "memberId": "louis",
@@ -38,11 +39,12 @@
       "showOnMap": true,
       "isPublic": true,
       "isOnline": true,
+      "isTesting": false,
       "meshRole": "repeater",
       "channels": []
     },
     {
-      "id": "rep03.ip2.ipnet.uk",
+      "id": "rep03.ip2.ipnt.uk",
       "publicKey": "3DC903EC46BB61A837BBC5212BB6000ED93E13F3FE4A04B390A8AD80C7D5357A",
       "name": "IP2 Repeater 3",
       "memberId": "louis",
@@ -58,11 +60,12 @@
       "showOnMap": true,
       "isPublic": true,
       "isOnline": false,
+      "isTesting": false,
       "meshRole": "repeater",
       "channels": []
     },
         {
-      "id": "int01.ip2.ipnet.uk",
+      "id": "int01.ip2.ipnt.uk",
       "publicKey": "",
       "name": "IP2 Integration 1",
       "memberId": "louis",
@@ -78,31 +81,33 @@
       "showOnMap": false,
       "isPublic": true,
       "isOnline": true,
+      "isTesting": false,
       "meshRole": "integration",
       "channels": []
     },
     {
-      "id": "rep01.ip3.ipnet.uk",
-      "publicKey": "",
+      "id": "rep01.ip3.ipnt.uk",
+      "publicKey": "f6d5f124bc3906168f7a785dd9def8467aa503336d99e9fb9229d51816773740",
       "name": "IP3 Repeater 1",
-      "memberId": "tbe",
+      "memberId": "markab",
       "area": "IP3",
       "location": {
         "lat": 52.0458,
         "lng": 1.20441,
         "description": "Brokehall"
       },
-      "hardware": "Heltec V3",
-      "antenna": "Unknown",
-      "elevation": 120,
+      "hardware": "Heltec T114",
+      "antenna": "Paradar 8.5dBi omni",
+      "elevation": 42,
       "showOnMap": true,
       "isPublic": true,
       "isOnline": true,
+      "isTesting": false,
       "meshRole": "repeater",
       "channels": []
     },
     {
-      "id": "rep02.ip3.ipnet.uk",
+      "id": "rep02.ip3.ipnt.uk",
       "publicKey": "",
       "name": "IP3 Repeater 2",
       "memberId": "ccz",
@@ -118,11 +123,12 @@
       "showOnMap": true,
       "isPublic": true,
       "isOnline": true,
+      "isTesting": false,
       "meshRole": "repeater",
       "channels": []
     },
     {
-      "id": "rep03.ip3.ipnet.uk",
+      "id": "rep03.ip3.ipnt.uk",
       "publicKey": "",
       "name": "IP3 Repeater 3",
       "memberId": "ccz",
@@ -138,8 +144,93 @@
       "showOnMap": true,
       "isPublic": true,
       "isOnline": true,
+      "isTesting": false,
       "meshRole": "repeater",
       "channels": []
-    }
+    },
+    {
+      "id": "rmp02.ip3.ipnt.uk",
+      "publicKey": "900fd7c80e7ffe1174088d3dd51e863b6282ff6535cf9145679f2b429fec07eb",
+      "name": "IP3 Public Room 2",
+      "memberId": "markab",
+      "area": "IP3",
+      "location": {
+        "lat": 52.045564,
+        "lng": 1.204011,
+        "description": "Brokehall"
+      },
+      "hardware": "Heltec V3",
+      "antenna": "Generic 3dBi Whip",
+      "elevation": 37,
+      "showOnMap": true,
+      "isPublic": true,
+      "isOnline": true,
+      "isTesting": false,
+      "meshRole": "room",
+      "channels": []
+    },
+    {
+      "id": "tst01.ip4.ipnt.uk",
+      "publicKey": "",
+      "name": "IP4 Test Repeater 1",
+      "memberId": "markab",
+      "area": "IP4",
+      "location": {
+        "lat": 52.05243,
+        "lng": 1.156919,
+        "description": "Marina Wine Rack"
+      },
+      "hardware": "Heltec V3",
+      "antenna": "Generic 5dBi Whip",
+      "elevation": 85,
+      "showOnMap": true,
+      "isPublic": true,
+      "isOnline": false,
+      "isTesting": true,
+      "meshRole": "repeater",
+      "channels": []
+    },
+    {
+      "id": "tst02.ip3.ipnt.uk",
+      "publicKey": "7295f7201062be70359e7ba12821b0dd2d028d9111fb34955b8751af86fc9121",
+      "name": "IP3 Test Repeater 2",
+      "memberId": "markab",
+      "area": "IP3",
+      "location": {
+        "lat": 52.04636,
+        "lng": 1.174638,
+        "description": "Holywells"
+      },
+      "hardware": "Sensecap Solar",
+      "antenna": "Paradar 5dBi Whip",
+      "elevation": 38,
+      "showOnMap": true,
+      "isPublic": true,
+      "isOnline": false,
+      "isTesting": true,
+      "meshRole": "repeater",
+      "channels": []
+	  },
+    {
+      "id": "tst03.ip3.ipnt.uk",
+      "publicKey": "ea2032a4d2d12c582136c4fe90a357bd1d6712cfec1c9de48f1ce115668b0991",
+      "name": "IP3 Test Repeater 3",
+      "memberId": "markab",
+      "area": "IP3",
+      "location": {
+        "lat": 52.0525283,
+        "lng": 1.17031,
+        "description": "Back Hamlet"
+      },
+      "hardware": "Heltec V3",
+      "antenna": "Generic 5dBi Whip",
+      "elevation": 20,
+      "showOnMap": true,
+      "isPublic": true,
+      "isOnline": false,
+      "isTesting": true,
+      "meshRole": "repeater",
+      "channels": []
+	  }
   ]
 }

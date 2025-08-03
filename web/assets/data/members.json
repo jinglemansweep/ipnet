@@ -16,12 +16,12 @@
       }
     },
     {
-      "id": "tbe",
-      "name": "TBE",
+      "id": "markab",
+      "name": "Mark",
       "joinDate": "2025-07-01",
       "location": "Ipswich",
-      "avatar": "/assets/images/avatars/tbe.jpg",
-      "bio": "",
+      "avatar": "/assets/images/avatars/markab.jpg",
+      "bio": "Tech and Electronics Geek",
       "contactPreference": "discord",
       "isPublic": true,
       "socialLinks": {
