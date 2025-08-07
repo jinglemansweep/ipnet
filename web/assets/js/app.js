@@ -247,6 +247,12 @@ function nodesData() {
                     });
                     
                     const marker = L.marker([node.location.lat, node.location.lng], { icon: customIcon })
+                        .bindTooltip(node.id, {
+                            permanent: true,
+                            direction: 'right',
+                            offset: [15, 0],
+                            className: 'node-tooltip'
+                        })
                         .bindPopup(`
                             <div class="max-w-xs">
                                 <strong class="text-lg">${node.location.description}, ${node.area}</strong><br>

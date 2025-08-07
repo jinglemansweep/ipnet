@@ -393,3 +393,30 @@ select:focus {
 .dark .leaflet-popup-tip {
     background-color: #374151;
 }
+
+/* Node tooltip styles */
+.node-tooltip {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    color: #1f2937 !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 6px !important;
+    padding: 4px 8px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+    backdrop-filter: blur(8px) !important;
+}
+
+.node-tooltip::before {
+    border-right-color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.dark .node-tooltip {
+    background-color: rgba(55, 65, 81, 0.95) !important;
+    color: #f9fafb !important;
+    border-color: #4b5563 !important;
+}
+
+.dark .node-tooltip::before {
+    border-right-color: rgba(55, 65, 81, 0.95) !important;
+}
