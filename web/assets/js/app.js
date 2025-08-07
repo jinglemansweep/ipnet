@@ -422,10 +422,8 @@ function nodesData() {
                         })
                         .bindPopup(`
                             <div class="max-w-xs">
-                                <strong class="text-lg">${node.location.description}, ${node.area}</strong><br>
+                                <strong class="text-lg">${node.name}</strong><br>
                                 <div class="mt-2 space-y-1 text-sm">
-                                    <div><em>ID:</em> ${node.id}</div>
-                                    <div><em>Name:</em> ${node.name}</div>
                                     <div><em>Owner:</em> ${this.getMemberName(node.memberId)}</div>
                                     <!--
                                     <div class="flex items-center mt-2">
