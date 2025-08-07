@@ -182,13 +182,32 @@ function nodesData() {
             if (node) {
                 this.currentNode = node;
                 this.showingIndividualNode = true;
-                // Focus map on this node
-                if (this.map && node.location) {
-                    this.map.setView([node.location.lat, node.location.lng], 15);
-                }
+                // Focus map on this node with delay to ensure map is ready
+                this.$nextTick(() => {
+                    setTimeout(() => {
+                        this.focusMapOnCurrentNode();
+                    }, 200);
+                });
             } else {
                 // Node not found, redirect to nodes list
                 this.showNodesList();
+            }
+        },
+        
+        // Focus map on current node with enhanced zoom and highlighting
+        focusMapOnCurrentNode() {
+            if (this.map && this.currentNode && this.currentNode.location) {
+                // Set view with higher zoom for individual node viewing
+                this.map.setView([this.currentNode.location.lat, this.currentNode.location.lng], 16);
+                
+                // Find and open the popup for this node
+                this.markers.forEach(marker => {
+                    if (marker.getLatLng().lat === this.currentNode.location.lat && 
+                        marker.getLatLng().lng === this.currentNode.location.lng) {
+                        // Open the popup to highlight the node
+                        marker.openPopup();
+                    }
+                });
             }
         },
         
@@ -196,6 +215,10 @@ function nodesData() {
         showNodesList() {
             this.showingIndividualNode = false;
             this.currentNode = null;
+            // Close any open popups
+            if (this.map) {
+                this.map.closePopup();
+            }
             this.fitMapToNodes();
         },
         
