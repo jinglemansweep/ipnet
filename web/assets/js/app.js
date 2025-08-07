@@ -197,17 +197,43 @@ function nodesData() {
         // Focus map on current node with enhanced zoom and highlighting
         focusMapOnCurrentNode() {
             if (this.map && this.currentNode && this.currentNode.location) {
-                // Set view with higher zoom for individual node viewing
-                this.map.setView([this.currentNode.location.lat, this.currentNode.location.lng], 16);
+                // Invalidate map size to handle container resize
+                this.map.invalidateSize();
                 
-                // Find and open the popup for this node
-                this.markers.forEach(marker => {
-                    if (marker.getLatLng().lat === this.currentNode.location.lat && 
-                        marker.getLatLng().lng === this.currentNode.location.lng) {
-                        // Open the popup to highlight the node
-                        marker.openPopup();
-                    }
-                });
+                const lat = this.currentNode.location.lat;
+                const lng = this.currentNode.location.lng;
+                
+                // Calculate offset for popup positioning
+                // Popup typically extends upward, so we offset the center point down
+                const mapContainer = this.map.getContainer();
+                const mapHeight = mapContainer.offsetHeight;
+                const popupOffsetPixels = Math.min(80, mapHeight * 0.15); // 80px or 15% of map height, whichever is smaller
+                
+                // Convert pixel offset to lat/lng offset
+                const bounds = this.map.getBounds();
+                const latRange = bounds.getNorth() - bounds.getSouth();
+                const latOffsetPerPixel = latRange / mapHeight;
+                const latOffset = latOffsetPerPixel * popupOffsetPixels;
+                
+                // Set view with offset to account for popup
+                this.map.setView([lat - latOffset, lng], 16);
+                
+                // Small delay to ensure view is set before opening popup
+                setTimeout(() => {
+                    // Find and open the popup for this node
+                    this.markers.forEach(marker => {
+                        if (marker.getLatLng().lat === lat && marker.getLatLng().lng === lng) {
+                            // Open the popup to highlight the node
+                            marker.openPopup();
+                        }
+                    });
+                    
+                    // Scroll to top of page
+                    window.scrollTo({ 
+                        top: 0, 
+                        behavior: 'smooth' 
+                    });
+                }, 100);
             }
         },
         
@@ -218,8 +244,16 @@ function nodesData() {
             // Close any open popups
             if (this.map) {
                 this.map.closePopup();
+                // Handle map resize when returning to full view
+                this.$nextTick(() => {
+                    setTimeout(() => {
+                        this.map.invalidateSize();
+                        this.fitMapToNodes();
+                    }, 100);
+                });
+            } else {
+                this.fitMapToNodes();
             }
-            this.fitMapToNodes();
         },
         
         // Navigate to a specific node (called from UI)
@@ -390,21 +424,15 @@ function nodesData() {
                             <div class="max-w-xs">
                                 <strong class="text-lg">${node.location.description}, ${node.area}</strong><br>
                                 <div class="mt-2 space-y-1 text-sm">
-                                    <div><em>ID:</em> <code style="background-color: #f3f4f6; color: #1f2937; padding: 2px 4px; border-radius: 3px; font-size: 11px;">${node.id}</code></div>
+                                    <div><em>ID:</em> ${node.id}</div>
                                     <div><em>Name:</em> ${node.name}</div>
                                     <div><em>Owner:</em> ${this.getMemberName(node.memberId)}</div>
-                                    <div><em>Hardware:</em> ${node.hardware}</div>
-                                    <div><em>Role:</em> ${node.meshRole}</div>
-                                    <div><em>Elevation:</em> ${node.elevation}m</div>
+                                    <!--
                                     <div class="flex items-center mt-2">
                                         <div class="w-2 h-2 rounded-full mr-2" style="background-color: ${statusColor}"></div>
                                         <span class="font-medium">${node.isOnline !== false ? 'Online' : 'Offline'}</span>
                                     </div>
-                                    <div class="mt-3 pt-2 border-t border-gray-200">
-                                        <button onclick="window.nodesPageInstance.navigateToNode(window.nodesPageInstance.nodes.find(n => n.id === '${node.id}'))" class="text-primary hover:text-accent text-sm font-medium">
-                                            View Details →
-                                        </button>
-                                    </div>
+                                    -->
                                 </div>
                             </div>
                         `, {

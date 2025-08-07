@@ -111,7 +111,7 @@ extraScripts: |
                 <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Network Map</h2>
                 <p class="text-sm text-gray-600 dark:text-gray-300">Interactive map showing all registered nodes</p>
             </div>
-            <div class="h-[50vh] lg:h-[75vh]">
+            <div :class="showingIndividualNode ? 'h-[30vh] lg:h-[40vh]' : 'h-[50vh] lg:h-[75vh]'">
                 <div id="nodesMap" class="h-full w-full"></div>
             </div>
         </div>
