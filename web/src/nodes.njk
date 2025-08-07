@@ -19,13 +19,47 @@ extraScripts: |
 <!-- Page Header -->
 <div class="bg-gray-50 dark:bg-gray-800 py-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100">Network Nodes</h1>
-        <p class="mt-2 text-gray-600 dark:text-gray-300">Interactive map and details of all public nodes in our mesh network</p>
+        <!-- Individual Node Header -->
+        <div x-show="showingIndividualNode && currentNode" x-transition>
+            <nav class="flex mb-4" aria-label="Breadcrumb">
+                <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                    <li class="inline-flex items-center">
+                        <button @click="navigateToNodesList()" class="inline-flex items-center text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary">
+                            Network Nodes
+                        </button>
+                    </li>
+                    <li>
+                        <div class="flex items-center">
+                            <svg class="w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                            </svg>
+                            <span class="ml-1 text-sm font-medium text-gray-500 dark:text-gray-400" x-text="currentNode?.area"></span>
+                        </div>
+                    </li>
+                    <li aria-current="page">
+                        <div class="flex items-center">
+                            <svg class="w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                            </svg>
+                            <span class="ml-1 text-sm font-medium text-gray-500 dark:text-gray-400" x-text="currentNode?.name"></span>
+                        </div>
+                    </li>
+                </ol>
+            </nav>
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100" x-text="currentNode?.name"></h1>
+            <p class="mt-2 text-gray-600 dark:text-gray-300" x-text="`${currentNode?.location?.description}, ${currentNode?.area}`"></p>
+        </div>
+        
+        <!-- Default Header -->
+        <div x-show="!showingIndividualNode">
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100">Network Nodes</h1>
+            <p class="mt-2 text-gray-600 dark:text-gray-300">Interactive map and details of all public nodes in our mesh network</p>
+        </div>
     </div>
 </div>
 
 <!-- Filters -->
-<div class="py-6 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+<div x-show="!showingIndividualNode" class="py-6 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-wrap gap-4">
             <div class="flex items-center space-x-2">
@@ -84,8 +118,111 @@ extraScripts: |
     </div>
 </div>
 
+<!-- Individual Node Details -->
+<div x-show="showingIndividualNode && currentNode" x-transition class="py-8">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+            <div class="px-6 py-8">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center">
+                        <div :class="currentNode?.isOnline ? 'bg-green-500' : 'bg-red-500'" class="w-4 h-4 rounded-full mr-3"></div>
+                        <span :class="currentNode?.isOnline ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'" class="text-lg font-semibold" x-text="currentNode?.isOnline ? 'Online' : 'Offline'"></span>
+                    </div>
+                    <button @click="navigateToNodesList()" class="text-gray-500 dark:text-gray-400 hover:text-primary">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Node Information</h3>
+                            <div class="mt-2 space-y-3">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-300">ID:</span>
+                                    <code class="text-gray-900 dark:text-gray-100 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded text-sm font-mono" x-text="currentNode?.id"></code>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-300">Name:</span>
+                                    <span class="text-gray-900 dark:text-gray-100 font-medium" x-text="currentNode?.name"></span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-300">Area:</span>
+                                    <span class="text-gray-900 dark:text-gray-100 font-medium" x-text="currentNode?.area"></span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-300">Role:</span>
+                                    <span class="text-gray-900 dark:text-gray-100 font-medium capitalize" x-text="currentNode?.meshRole"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Hardware</h3>
+                            <div class="mt-2 space-y-3">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-300">Model:</span>
+                                    <span class="text-gray-900 dark:text-gray-100 font-medium" x-text="currentNode?.hardware"></span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-300">Antenna:</span>
+                                    <span class="text-gray-900 dark:text-gray-100 font-medium" x-text="currentNode?.antenna"></span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-300">Elevation:</span>
+                                    <span class="text-gray-900 dark:text-gray-100 font-medium" x-text="`${currentNode?.elevation}m`"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Location</h3>
+                            <div class="mt-2 space-y-3">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-300">Description:</span>
+                                    <span class="text-gray-900 dark:text-gray-100 font-medium" x-text="currentNode?.location?.description"></span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-300">Coordinates:</span>
+                                    <span class="text-gray-900 dark:text-gray-100 font-mono text-sm">
+                                        <span x-text="currentNode?.location?.lat?.toFixed(6)"></span>, <span x-text="currentNode?.location?.lng?.toFixed(6)"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Ownership</h3>
+                            <div class="mt-2 space-y-3">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-300">Owner:</span>
+                                    <a href="{{ '/members/' | url }}" class="text-primary hover:text-accent font-medium uppercase" x-text="currentNode?.memberId"></a>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-300">Public Key:</span>
+                                    <code class="text-gray-900 dark:text-gray-100 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded text-xs font-mono break-all" x-text="currentNode?.publicKey || 'Not available'"></code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-600">
+                    <button @click="navigateToNodesList()" class="btn-primary">
+                        ← Back to Node Directory
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Node Statistics -->
-<div class="py-8 bg-gray-50 dark:bg-gray-800">
+<div x-show="!showingIndividualNode" class="py-8 bg-gray-50 dark:bg-gray-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
             <div class="bg-white dark:bg-gray-700 rounded-lg p-6 text-center">
@@ -105,7 +242,7 @@ extraScripts: |
 </div>
 
 <!-- Nodes List -->
-<div class="py-8">
+<div x-show="!showingIndividualNode" class="py-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-6">
             <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">Node Directory</h2>

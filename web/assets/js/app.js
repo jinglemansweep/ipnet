@@ -75,6 +75,41 @@ function homeData() {
     }
 }
 
+// Client-side routing utilities
+const Router = {
+    // Parse URL parameters
+    getUrlParams() {
+        const params = new URLSearchParams(window.location.search);
+        return {
+            area: params.get('area'),
+            node: params.get('node')
+        };
+    },
+    
+    // Update URL without page reload
+    updateUrl(area, nodeId) {
+        const url = `/${area}/${nodeId}`;
+        history.pushState({ area, nodeId }, '', url);
+    },
+    
+    // Navigate to node route
+    navigateToNode(area, nodeId) {
+        this.updateUrl(area, nodeId);
+        // Trigger custom event for components to listen to
+        window.dispatchEvent(new CustomEvent('routechange', { 
+            detail: { area, nodeId } 
+        }));
+    },
+    
+    // Navigate back to nodes list
+    navigateToNodes() {
+        history.pushState({}, '', '/nodes/');
+        window.dispatchEvent(new CustomEvent('routechange', { 
+            detail: { area: null, nodeId: null } 
+        }));
+    }
+};
+
 // Nodes page data
 function nodesData() {
     return {
@@ -90,11 +125,36 @@ function nodesData() {
         map: null,
         markers: [],
         markerClusterGroup: null,
+        // Routing state
+        currentNode: null,
+        showingIndividualNode: false,
         
         async init() {
             const data = await loadData();
             this.nodes = data.nodes;
             this.members = data.members;
+            
+            // Make this component globally accessible for popup buttons
+            window.nodesPageInstance = this;
+            
+            // Check for routing parameters
+            this.handleRouting();
+            
+            // Listen for browser navigation
+            window.addEventListener('popstate', () => {
+                this.handleRouting();
+            });
+            
+            // Listen for custom route changes
+            window.addEventListener('routechange', (e) => {
+                const { area, nodeId } = e.detail;
+                if (area && nodeId) {
+                    this.showNode(area, nodeId);
+                } else {
+                    this.showNodesList();
+                }
+            });
+            
             this.applyFilters();
             
             // Initialize map after DOM is ready
@@ -103,6 +163,54 @@ function nodesData() {
                     this.initMap();
                 }, 100);
             });
+        },
+        
+        // Handle routing based on URL parameters or query strings
+        handleRouting() {
+            const urlParams = Router.getUrlParams();
+            
+            if (urlParams.area && urlParams.node) {
+                this.showNode(urlParams.area, urlParams.node);
+            } else {
+                this.showNodesList();
+            }
+        },
+        
+        // Show individual node
+        showNode(area, nodeId) {
+            const node = this.nodes.find(n => n.id === nodeId || n.id === `${nodeId}.${area}.ipnt.uk`);
+            if (node) {
+                this.currentNode = node;
+                this.showingIndividualNode = true;
+                // Focus map on this node
+                if (this.map && node.location) {
+                    this.map.setView([node.location.lat, node.location.lng], 15);
+                }
+            } else {
+                // Node not found, redirect to nodes list
+                this.showNodesList();
+            }
+        },
+        
+        // Show nodes list
+        showNodesList() {
+            this.showingIndividualNode = false;
+            this.currentNode = null;
+            this.fitMapToNodes();
+        },
+        
+        // Navigate to a specific node (called from UI)
+        navigateToNode(node) {
+            const nodeIdParts = node.id.split('.');
+            const shortId = nodeIdParts[0]; // e.g. "rep01" from "rep01.ip3.ipnt.uk"
+            const area = node.area.toLowerCase(); // e.g. "ip3"
+            
+            Router.navigateToNode(area, shortId);
+        },
+        
+        // Navigate back to nodes list (called from UI)
+        navigateToNodesList() {
+            Router.navigateToNodes();
         },
         
         get availableHardware() {
@@ -125,6 +233,8 @@ function nodesData() {
             if (this.map) {
                 this.map.setView([node.location.lat, node.location.lng], 15);
             }
+            // Also navigate to the node page
+            this.navigateToNode(node);
         },
         
         initMap() {
@@ -267,11 +377,16 @@ function nodesData() {
                                         <div class="w-2 h-2 rounded-full mr-2" style="background-color: ${statusColor}"></div>
                                         <span class="font-medium">${node.isOnline !== false ? 'Online' : 'Offline'}</span>
                                     </div>
+                                    <div class="mt-3 pt-2 border-t border-gray-200">
+                                        <button onclick="window.nodesPageInstance.navigateToNode(window.nodesPageInstance.nodes.find(n => n.id === '${node.id}'))" class="text-primary hover:text-accent text-sm font-medium">
+                                            View Details →
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         `, {
-                            closeOnClick: true,
-                            autoClose: true,
+                            closeOnClick: false,
+                            autoClose: false,
                             closeButton: true
                         });
                     

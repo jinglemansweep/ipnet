@@ -1,0 +1,54 @@
+---
+layout: layout.njk
+title: Page Not Found - IPNet
+description: The requested page could not be found. Redirecting to handle routing...
+permalink: /404.html
+eleventyExcludeFromCollections: true
+---
+
+<div class="min-h-screen bg-gray-50 dark:bg-gray-800 flex items-center justify-center py-12 px-4">
+    <div class="max-w-md w-full text-center">
+        <!-- Loading spinner -->
+        <div id="loading" class="mb-8">
+            <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-primary mx-auto"></div>
+            <p class="text-gray-600 dark:text-gray-300 mt-4">Checking route...</p>
+        </div>
+        
+        <!-- 404 content (shown if not a valid route) -->
+        <div id="not-found" class="hidden">
+            <div class="text-6xl font-bold text-primary mb-4">404</div>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Page Not Found</h1>
+            <p class="text-gray-600 dark:text-gray-300 mb-8">The page you're looking for doesn't exist.</p>
+            <a href="{{ '/' | url }}" class="btn-primary inline-block">
+                Return Home
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+// Client-side routing handler for GitHub Pages
+(function() {
+    const path = window.location.pathname;
+    const segments = path.split('/').filter(Boolean);
+    
+    // Check if this looks like a node route: /<area>/<node-id>
+    if (segments.length === 2) {
+        const [area, nodeId] = segments;
+        
+        // Basic validation - area should be like "ip1", "ip2", etc.
+        if (/^ip\d+$/i.test(area)) {
+            // Redirect to nodes page with query parameters
+            const nodesUrl = `{{ '/nodes/' | url }}?area=${encodeURIComponent(area)}&node=${encodeURIComponent(nodeId)}`;
+            window.location.replace(nodesUrl);
+            return;
+        }
+    }
+    
+    // If not a valid node route, show 404
+    setTimeout(() => {
+        document.getElementById('loading').classList.add('hidden');
+        document.getElementById('not-found').classList.remove('hidden');
+    }, 1000);
+})();
+</script>
