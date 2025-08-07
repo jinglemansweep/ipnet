@@ -182,12 +182,7 @@ function nodesData() {
             if (node) {
                 this.currentNode = node;
                 this.showingIndividualNode = true;
-                // Focus map on this node with delay to ensure map is ready
-                this.$nextTick(() => {
-                    setTimeout(() => {
-                        this.focusMapOnCurrentNode();
-                    }, 200);
-                });
+                // Focus will happen automatically after map initialization
             } else {
                 // Node not found, redirect to nodes list
                 this.showNodesList();
@@ -197,43 +192,15 @@ function nodesData() {
         // Focus map on current node with enhanced zoom and highlighting
         focusMapOnCurrentNode() {
             if (this.map && this.currentNode && this.currentNode.location) {
-                // Invalidate map size to handle container resize
-                this.map.invalidateSize();
-                
                 const lat = this.currentNode.location.lat;
                 const lng = this.currentNode.location.lng;
                 
-                // Calculate offset for popup positioning
-                // Popup typically extends upward, so we offset the center point down
-                const mapContainer = this.map.getContainer();
-                const mapHeight = mapContainer.offsetHeight;
-                const popupOffsetPixels = Math.min(80, mapHeight * 0.15); // 80px or 15% of map height, whichever is smaller
+                // Update markers to disable clustering for individual view
+                this.updateMapMarkers();
                 
-                // Convert pixel offset to lat/lng offset
-                const bounds = this.map.getBounds();
-                const latRange = bounds.getNorth() - bounds.getSouth();
-                const latOffsetPerPixel = latRange / mapHeight;
-                const latOffset = latOffsetPerPixel * popupOffsetPixels;
-                
-                // Set view with offset to account for popup
-                this.map.setView([lat - latOffset, lng], 16);
-                
-                // Small delay to ensure view is set before opening popup
-                setTimeout(() => {
-                    // Find and open the popup for this node
-                    this.markers.forEach(marker => {
-                        if (marker.getLatLng().lat === lat && marker.getLatLng().lng === lng) {
-                            // Open the popup to highlight the node
-                            marker.openPopup();
-                        }
-                    });
-                    
-                    // Scroll to top of page
-                    window.scrollTo({ 
-                        top: 0, 
-                        behavior: 'smooth' 
-                    });
-                }, 100);
+                // Simple center without height adjustments since map height is consistent
+                this.map.invalidateSize(true);
+                this.map.setView([lat, lng], 20);
             }
         },
         
@@ -292,6 +259,14 @@ function nodesData() {
             }
             // Also navigate to the node page
             this.navigateToNode(node);
+            
+            // Scroll to top after a brief delay to allow DOM updates
+            setTimeout(() => {
+                window.scrollTo({ 
+                    top: 0, 
+                    behavior: 'smooth' 
+                });
+            }, 100);
         },
         
         initMap() {
@@ -355,6 +330,11 @@ function nodesData() {
                     
                     this.updateMapMarkers();
                     this.fitMapToNodes();
+                    
+                    // Check if we need to focus on a specific node (for direct URL access)
+                    if (this.currentNode && this.showingIndividualNode) {
+                        this.focusMapOnCurrentNode();
+                    }
                 }, 100);
             });
         },
@@ -399,6 +379,9 @@ function nodesData() {
                 this.markers = [];
             }
             
+            // Disable clustering when viewing individual node
+            const useClusterGroup = this.markerClusterGroup && !this.showingIndividualNode;
+            
             // Add markers for filtered nodes
             this.filteredNodes.forEach(node => {
                 if (!node.showOnMap || !node.location || !node.location.lat || !node.location.lng) return;
@@ -439,8 +422,8 @@ function nodesData() {
                             closeButton: true
                         });
                     
-                    // Add to cluster group if available, otherwise directly to map
-                    if (this.markerClusterGroup) {
+                    // Add to cluster group if clustering is enabled, otherwise directly to map
+                    if (useClusterGroup) {
                         this.markerClusterGroup.addLayer(marker);
                     } else {
                         marker.addTo(this.map);
