@@ -59,7 +59,7 @@
       "elevation": 120,
       "showOnMap": true,
       "isPublic": true,
-      "isOnline": false,
+      "isOnline": true,
       "isTesting": false,
       "meshRole": "repeater",
       "channels": []
@@ -87,16 +87,16 @@
     },
     {
       "id": "rep01.ip3.ipnt.uk",
-      "publicKey": "f6d5f124bc3906168f7a785dd9def8467aa503336d99e9fb9229d51816773740",
+      "publicKey": "b58dc510a30b1675dd9a9ac7ab05ac601e5eee7b0a8ee5ca7189de4056b9ae49",
       "name": "IP3 Repeater 1",
       "memberId": "markab",
       "area": "IP3",
       "location": {
-        "lat": 52.0458,
-        "lng": 1.20441,
+        "lat": 52.045803,
+        "lng": 1.204416,
         "description": "Brokehall"
       },
-      "hardware": "Heltec T114",
+      "hardware": "Heltec V3",
       "antenna": "Paradar 8.5dBi omni",
       "elevation": 42,
       "showOnMap": true,
@@ -108,7 +108,7 @@
     },
     {
       "id": "rep02.ip3.ipnt.uk",
-      "publicKey": "",
+      "publicKey": "e334ec5475789d542ed9e692fbeef7444a371fcc05adcbda1f47ba6a3191b459",
       "name": "IP3 Repeater 2",
       "memberId": "ccz",
       "area": "IP3",
@@ -117,7 +117,7 @@
         "lng": 1.17543,
         "description": "Morland Road Allotments"
       },
-      "hardware": "Heltec V3",
+      "hardware": "Heltec T114",
       "antenna": "Unknown",
       "elevation": 120,
       "showOnMap": true,
@@ -129,7 +129,7 @@
     },
     {
       "id": "rep03.ip3.ipnt.uk",
-      "publicKey": "",
+      "publicKey": "d0d22155abee3e227438418739937e327440a08152361ed3bbc53031a1cb2b66",
       "name": "IP3 Repeater 3",
       "memberId": "ccz",
       "area": "IP3",
@@ -170,65 +170,44 @@
       "channels": []
     },
     {
-      "id": "tst01.ip4.ipnt.uk",
-      "publicKey": "",
-      "name": "IP4 Test Repeater 1",
-      "memberId": "markab",
-      "area": "IP4",
-      "location": {
-        "lat": 52.05243,
-        "lng": 1.156919,
-        "description": "Marina Wine Rack"
-      },
-      "hardware": "Heltec V3",
-      "antenna": "Generic 5dBi Whip",
-      "elevation": 85,
-      "showOnMap": true,
-      "isPublic": true,
-      "isOnline": false,
-      "isTesting": true,
-      "meshRole": "repeater",
-      "channels": []
-    },
-    {
-      "id": "tst02.ip3.ipnt.uk",
-      "publicKey": "7295f7201062be70359e7ba12821b0dd2d028d9111fb34955b8751af86fc9121",
-      "name": "IP3 Test Repeater 2",
+      "id": "rep04.ip3.ipnt.uk",
+      "publicKey": "2a4f89e766dfa1758e35a69962c1f6d352b206a5e3562a589155a3ebfe7fc2bb",
+      "name": "IP3 Repeater 4",
       "memberId": "markab",
       "area": "IP3",
       "location": {
-        "lat": 52.04636,
-        "lng": 1.174638,
-        "description": "Holywells"
+        "lat": 52.046383,
+        "lng": 1.174542,
+        "description": "Back Hamlet"
       },
       "hardware": "Sensecap Solar",
-      "antenna": "Paradar 5dBi Whip",
-      "elevation": 38,
+      "antenna": "Paradar 5dbi Whip",
+      "elevation": 20,
       "showOnMap": true,
       "isPublic": true,
-      "isOnline": false,
-      "isTesting": true,
+      "isOnline": true,
+      "isTesting": false,
       "meshRole": "repeater",
       "channels": []
 	  },
     {
-      "id": "tst03.ip3.ipnt.uk",
-      "publicKey": "ea2032a4d2d12c582136c4fe90a357bd1d6712cfec1c9de48f1ce115668b0991",
-      "name": "IP3 Test Repeater 3",
+      "id": "rep05.ip3.ipnt.uk",
+      "publicKey": "7295f7201062be70359e7ba12821b0dd2d028d9111fb34955b8751af86fc9121",
+      "name": "IP3 Repeater 5",
       "memberId": "markab",
       "area": "IP3",
       "location": {
-        "lat": 52.0525283,
-        "lng": 1.17031,
-        "description": "Back Hamlet"
+        "lat": 52.052526,
+        "lng": 1.170348,
+        "description": "Holywells"
       },
-      "hardware": "Heltec V3",
-      "antenna": "Generic 5dBi Whip",
-      "elevation": 20,
+      "hardware": "Sensecap Solar",
+      "antenna": "Paradar 6.5dBi omni",
+      "elevation": 38,
       "showOnMap": true,
       "isPublic": true,
-      "isOnline": false,
-      "isTesting": true,
+      "isOnline": true,
+      "isTesting": false,
       "meshRole": "repeater",
       "channels": []
 	  }
