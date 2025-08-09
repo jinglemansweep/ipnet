@@ -11,7 +11,7 @@
       "contactPreference": "discord",
       "isPublic": true,
       "nodeName": "PTLK",
-      "nodeUri": "meshcore://11002369759a49261ac61aac96108a2e8cb5659ce4be23a4da24601db4e5dc638f78c0a49768a07af0c897d398e2dd4a42d99f4ed95a9d99a9b653d4290f790bfd7a25eb14b4fbbd27868e1e1d516ad49e2e266f1a8d1316067c5cc07915a3ff4cf77df38c099114fc19038a41110050544c4b",
+      "nodePublicKey": "ba472bc42bb9adb22f4b9b1d6414187631daebf5e83ce540a9fa6edf5033af55",
       "socialLinks": {
         "github": "jinglemansweep",
         "twitter": ""
@@ -27,7 +27,7 @@
       "contactPreference": "discord",
       "isPublic": true,
       "nodeName": "TBE",
-      "nodeUri": "meshcore://1103b572a011eb7fbf4a988e8aeef7ae45023ac8444c0793ae0e312e36ae1a18f4e28584321ae2966895ff606381a1d292a430ad390d6a91dcacc772d3b65330ca1474de00a768d8ecac908f2a916e54943d8b0d6f41445dfca457b40f18be3b09cb406c8ed4cb7a01919c1e1a0351801200544245",
+      "nodePublicKey": "ba472bc42bb9adb22f4b9b1d6414187631daebf5e83ce540a9fa6edf5033af55",
       "socialLinks": {
         "github": "",
         "twitter": ""
@@ -43,8 +43,7 @@
       "contactPreference": "discord",
       "isPublic": true,
       "nodeName": "CCZPortable",
-      "nodeUri": "meshcore://1103b572a011eb7fbf4a988e8aeef7ae45023ac8444c0793ae0e312e36ae1a18f4e28584321ae2966895ff606381a1d292a430ad390d6a91dcacc772d3b65330ca1474de00a768d8ecac908f2a916e54943d8b0d6f41445dfca457b40f18be3b09cb406c8ed4cb7a01919c1e1a0351801200544245",
-      "socialLinks": {
+      "nodePublicKey": "ba472bc42bb9adb22f4b9b1d6414187631daebf5e83ce540a9fa6edf5033af55","socialLinks": {
         "github": "",
         "twitter": ""
       }
@@ -59,7 +58,7 @@
       "contactPreference": "discord",
       "isPublic": true,
       "nodeName": "PWC1",
-      "nodeUri": "meshcore://1102bda0ba472bc42bb9adb22f4b9b1d6414187631daebf5e83ce540a9fa6edf5033af555d59946888f27e33472559d7181e05bd08ce1f4f737b833c1b2df4e775ab02735732a1b3c5a33c5969fec6bfee3c4db2dc37dfd87a6481c27f358c72a3de369acb89b8039190f81903ee10110050574331",
+      "nodePublicKey": "ba472bc42bb9adb22f4b9b1d6414187631daebf5e83ce540a9fa6edf5033af55",
       "socialLinks": {
         "github": "",
         "twitter": ""
