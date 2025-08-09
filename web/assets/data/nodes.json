@@ -119,7 +119,7 @@
       },
       "hardware": "Heltec T114",
       "antenna": "Unknown",
-      "elevation": 120,
+      "elevation": 39,
       "showOnMap": true,
       "isPublic": true,
       "isOnline": true,
@@ -140,7 +140,7 @@
       },
       "hardware": "Heltec V3",
       "antenna": "Unknown",
-      "elevation": 120,
+      "elevation": 39,
       "showOnMap": true,
       "isPublic": true,
       "isOnline": true,
@@ -178,11 +178,11 @@
       "location": {
         "lat": 52.046383,
         "lng": 1.174542,
-        "description": "Back Hamlet"
+        "description": "Holywells"
       },
       "hardware": "Sensecap Solar",
-      "antenna": "Paradar 5dbi Whip",
-      "elevation": 20,
+      "antenna": "Paradar 6.5dbi Omni",
+      "elevation": 21,
       "showOnMap": true,
       "isPublic": true,
       "isOnline": true,
@@ -199,15 +199,57 @@
       "location": {
         "lat": 52.052526,
         "lng": 1.170348,
-        "description": "Holywells"
+        "description": "Back Hamlet"
       },
       "hardware": "Sensecap Solar",
-      "antenna": "Paradar 6.5dBi omni",
+      "antenna": "Paradar 5dBi Whip",
       "elevation": 38,
       "showOnMap": true,
       "isPublic": true,
       "isOnline": true,
       "isTesting": false,
+      "meshRole": "repeater",
+      "channels": []
+	  },
+    {
+      "id": "rep01.ip8.ipnt.uk",
+      "publicKey": "bd7b5ac75f660675b39f368e1dbb6d1dbcefd8bd7a170e21a942954f67c8bf52",
+      "name": "IP8 Repeater 1",
+      "memberId": "walshie86",
+      "area": "IP8",
+      "location": {
+        "lat": 52.033684,
+        "lng": 1.118384,
+        "description": "Grove Hill"
+      },
+      "hardware": "Heltec V3",
+      "antenna": "McGill 3dbi Omni",
+      "elevation": 13,
+      "showOnMap": true,
+      "isPublic": true,
+      "isOnline": true,
+      "isTesting": false,
+      "meshRole": "repeater",
+      "channels": []
+	  },
+    {
+      "id": "tst04.ip4.ipnt.uk",
+      "publicKey": "d3c20d962f7384c111fbafad6fbc1c1dc0e5c3ce802fb3ee11020e8d8207ed3a",
+      "name": "IP4 Test Repeater 4",
+      "memberId": "markab",
+      "area": "IP4",
+      "location": {
+        "lat": 52.052445,
+        "lng": 1.156882,
+        "description": "Wine Rack"
+      },
+      "hardware": "Heltec T114",
+      "antenna": "Generic 5dbi Whip",
+      "elevation": 50,
+      "showOnMap": true,
+      "isPublic": true,
+      "isOnline": true,
+      "isTesting": true,
       "meshRole": "repeater",
       "channels": []
 	  }
