@@ -11,7 +11,7 @@
       "contactPreference": "discord",
       "isPublic": true,
       "nodeName": "PTLK",
-      "nodePublicKey": "ba472bc42bb9adb22f4b9b1d6414187631daebf5e83ce540a9fa6edf5033af55",
+      "nodePublicKey": "2369759a49261ac61aac96108a2e8cb5659ce4be23a4da24601db4e5dc638f78",
       "socialLinks": {
         "github": "jinglemansweep",
         "twitter": ""
@@ -27,7 +27,7 @@
       "contactPreference": "discord",
       "isPublic": true,
       "nodeName": "TBE",
-      "nodePublicKey": "ba472bc42bb9adb22f4b9b1d6414187631daebf5e83ce540a9fa6edf5033af55",
+      "nodePublicKey": "11eb7fbf4a988e8aeef7ae45023ac8444c0793ae0e312e36ae1a18f4e2858432",
       "socialLinks": {
         "github": "",
         "twitter": ""
@@ -43,7 +43,8 @@
       "contactPreference": "discord",
       "isPublic": true,
       "nodeName": "CCZPortable",
-      "nodePublicKey": "ba472bc42bb9adb22f4b9b1d6414187631daebf5e83ce540a9fa6edf5033af55","socialLinks": {
+      "nodePublicKey": "68d2bf4603e920be4ebc058606fae485503a4dbc853ab0bfe9967d912fb8dffb",
+      "socialLinks": {
         "github": "",
         "twitter": ""
       }
