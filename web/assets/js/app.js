@@ -506,8 +506,11 @@ function membersData() {
 }
 
 // Global QR Code generation function
-function generateQRCode(nodeUri, canvasId) {
-    if (!nodeUri || typeof qrcode === 'undefined') return;
+window.generateQRCode = function(nodeUri, canvasId) {
+    if (!nodeUri || typeof qrcode === 'undefined') {
+        console.error('Missing nodeUri or qrcode library not loaded');
+        return;
+    }
     
     setTimeout(() => {
         const canvas = document.getElementById(canvasId);
@@ -548,9 +551,11 @@ function generateQRCode(nodeUri, canvasId) {
             } catch (error) {
                 console.error('QR Code generation error:', error);
             }
+        } else {
+            console.error('Canvas element not found:', canvasId);
         }
     }, 100);
-}
+};
 
 // Contact page data
 function contactData() {
