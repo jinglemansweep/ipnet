@@ -420,6 +420,11 @@ function nodesData() {
                                     </div>
                                     -->
                                 </div>
+                                <div class="mt-3 pt-2 border-t border-gray-200">
+                                    <button onclick="window.nodesPageInstance.focusNodeOnMap({id: '${node.id}', location: {lat: ${node.location.lat}, lng: ${node.location.lng}}, area: '${node.area}', name: '${node.name}'})" class="text-primary hover:text-accent text-sm font-medium">
+                                        View Node Details
+                                    </button>
+                                </div>
                             </div>
                         `, {
                             closeOnClick: false,
@@ -452,7 +457,14 @@ function nodesData() {
                 const onlineMatch = !this.showOnlineOnly || node.isOnline !== false;
                 const testingMatch = this.showTesting || node.isTesting !== true;
                 return hardwareMatch && roleMatch && ownerMatch && onlineMatch && testingMatch;
-            }).sort((a, b) => a.id.localeCompare(b.id));
+            }).sort((a, b) => {
+                // Sort by area first, then by ID
+                const areaComparison = a.area.localeCompare(b.area);
+                if (areaComparison !== 0) return areaComparison;
+                
+                // If areas are the same, sort by ID
+                return a.id.localeCompare(b.id);
+            });
             
             this.updateMapMarkers();
             this.fitMapToNodes();
