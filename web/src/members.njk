@@ -66,7 +66,7 @@ extraHead: |
                         <div x-show="member.nodeName && member.nodePublicKey" x-data="{ showQR: false }" class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
                             <div class="text-center">
                                 <h4 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2"><span x-text="member.nodeName"></span></h4>
-                                <button @click="showQR = !showQR; if (showQR && !document.getElementById('qr-' + member.id).hasChildNodes()) generateQRCode('meshcore://contact/add?name=' + member.nodeName + '&public_key=' + member.nodePublicKey + '&type=1', 'qr-' + member.id)" 
+                                <button @click="showQR = !showQR; if (showQR && !document.getElementById('qr-' + member.id).hasChildNodes()) window.generateQRCode('meshcore://contact/add?name=' + member.nodeName + '&public_key=' + member.nodePublicKey + '&type=1', 'qr-' + member.id)" 
                                         class="text-sm bg-primary text-white px-3 py-1 rounded hover:bg-primary/80 transition-colors mb-3">
                                     <span x-text="showQR ? 'Hide QR Code' : 'Show QR Code'"></span>
                                 </button>
