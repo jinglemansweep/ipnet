@@ -388,7 +388,12 @@ function nodesData() {
                 
                 try {
                     // Create status indicator icon
-                    const statusColor = node.isOnline !== false ? '#10b981' : '#ef4444';
+                    let statusColor;
+                    if (node.isTesting === true) {
+                        statusColor = '#6633ff'; // blue for testing nodes
+                    } else {
+                        statusColor = node.isOnline !== false ? '#10b981' : '#ef4444'; // green for online, red for offline
+                    }
                     const customIcon = L.divIcon({
                         html: `<div style="background-color: ${statusColor};" class="w-6 h-6 rounded-full border-2 border-white shadow-lg"></div>`,
                         className: 'custom-marker',
@@ -447,7 +452,7 @@ function nodesData() {
                 const onlineMatch = !this.showOnlineOnly || node.isOnline !== false;
                 const testingMatch = this.showTesting || node.isTesting !== true;
                 return hardwareMatch && roleMatch && ownerMatch && onlineMatch && testingMatch;
-            });
+            }).sort((a, b) => a.id.localeCompare(b.id));
             
             this.updateMapMarkers();
             this.fitMapToNodes();
