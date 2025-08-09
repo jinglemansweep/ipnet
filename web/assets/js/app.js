@@ -501,54 +501,55 @@ function membersData() {
             if (!avatarPath) return '';
             const pathPrefix = getPathPrefix();
             return pathPrefix + avatarPath;
-        },
-        
-        generateQRCode(nodeUri, canvasId) {
-            if (!nodeUri || typeof qrcode === 'undefined') return;
-            
-            setTimeout(() => {
-                const canvas = document.getElementById(canvasId);
-                if (canvas) {
-                    try {
-                        const qr = qrcode(0, 'M');
-                        qr.addData(nodeUri);
-                        qr.make();
-                        
-                        const ctx = canvas.getContext('2d');
-                        const borderSize = 20;
-                        const qrSize = 210;
-                        const totalSize = qrSize + (borderSize * 2);
-                        const modules = qr.getModuleCount();
-                        const cellSize = qrSize / modules;
-                        
-                        canvas.width = totalSize;
-                        canvas.height = totalSize;
-                        
-                        // Fill entire canvas with white background
-                        ctx.fillStyle = '#FFFFFF';
-                        ctx.fillRect(0, 0, totalSize, totalSize);
-                        
-                        // Draw QR code with border offset
-                        ctx.fillStyle = '#000000';
-                        for (let row = 0; row < modules; row++) {
-                            for (let col = 0; col < modules; col++) {
-                                if (qr.isDark(row, col)) {
-                                    ctx.fillRect(
-                                        borderSize + (col * cellSize), 
-                                        borderSize + (row * cellSize), 
-                                        cellSize, 
-                                        cellSize
-                                    );
-                                }
-                            }
-                        }
-                    } catch (error) {
-                        console.error('QR Code generation error:', error);
-                    }
-                }
-            }, 100);
         }
     }
+}
+
+// Global QR Code generation function
+function generateQRCode(nodeUri, canvasId) {
+    if (!nodeUri || typeof qrcode === 'undefined') return;
+    
+    setTimeout(() => {
+        const canvas = document.getElementById(canvasId);
+        if (canvas) {
+            try {
+                const qr = qrcode(0, 'M');
+                qr.addData(nodeUri);
+                qr.make();
+                
+                const ctx = canvas.getContext('2d');
+                const borderSize = 20;
+                const qrSize = 210;
+                const totalSize = qrSize + (borderSize * 2);
+                const modules = qr.getModuleCount();
+                const cellSize = qrSize / modules;
+                
+                canvas.width = totalSize;
+                canvas.height = totalSize;
+                
+                // Fill entire canvas with white background
+                ctx.fillStyle = '#FFFFFF';
+                ctx.fillRect(0, 0, totalSize, totalSize);
+                
+                // Draw QR code with border offset
+                ctx.fillStyle = '#000000';
+                for (let row = 0; row < modules; row++) {
+                    for (let col = 0; col < modules; col++) {
+                        if (qr.isDark(row, col)) {
+                            ctx.fillRect(
+                                borderSize + (col * cellSize), 
+                                borderSize + (row * cellSize), 
+                                cellSize, 
+                                cellSize
+                            );
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('QR Code generation error:', error);
+            }
+        }
+    }, 100);
 }
 
 // Contact page data
