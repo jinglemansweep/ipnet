@@ -2,13 +2,15 @@ from flask import Flask, render_template, request, jsonify
 import json
 import os
 
-app = Flask(__name__, static_folder='web/assets', template_folder='templates')
+ASSETS_DIR = 'assets'
+
+app = Flask(__name__, static_folder=ASSETS_DIR, template_folder='templates')
 
 # Load data files
 def load_json_data(filename):
     """Load JSON data from the assets/data directory"""
     try:
-        with open(os.path.join('web/assets/data', filename), 'r') as f:
+        with open(os.path.join(ASSETS_DIR, "data", filename), 'r') as f:
             return json.load(f)
     except FileNotFoundError:
         return {}
