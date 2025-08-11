@@ -19,22 +19,8 @@
     <link rel="canonical" href="https://ipnt.uk/">
     <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
     
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#10b981',
-                        secondary: '#6b7280',
-                        accent: '#3b82f6'
-                    }
-                }
-            }
-        }
-    </script>
+    <!-- Built Tailwind CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}">
     
     <!-- Prevent flash of light theme -->
     <script>
@@ -51,53 +37,50 @@
     <!-- Alpine.js -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
-    
     {% block extra_head %}{% endblock %}
 </head>
-<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+<body class="app-body">
     <!-- Skip to main content -->
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-white px-4 py-2 rounded-md z-50">
+    <a href="#main-content" class="skip-to-main">
         Skip to main content
     </a>
 
     <!-- Navigation -->
-    <nav class="bg-white dark:bg-gray-800 shadow-lg border-b border-gray-200 dark:border-gray-700" x-data="{ mobileMenuOpen: false }">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
+    <nav class="main-nav" x-data="{ mobileMenuOpen: false }">
+        <div class="nav-container">
+            <div class="nav-content">
+                <div class="nav-left">
                     <!-- Logo -->
-                    <div class="flex-shrink-0 flex items-center">
+                    <div class="nav-logo">
                         <a href="{{ url_for('home') }}">
-                            <span class="ml-2 text-xl font-bold text-primary">IPNet</span>
+                            <span class="nav-logo-text">IPNet</span>
                         </a>
                     </div>
                     
                     <!-- Desktop Navigation -->
-                    <div class="hidden md:ml-10 md:flex md:space-x-8">
-                        <a href="{{ url_for('home') }}" class="{% if request.endpoint == 'home' %}border-primary text-primary border-b-2{% else %}border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-100 border-b-2{% endif %} px-1 pt-1 pb-1 text-sm font-medium">Home</a>
-                        <a href="{{ url_for('nodes') }}" class="{% if request.endpoint == 'nodes' %}border-primary text-primary border-b-2{% else %}border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-100 border-b-2{% endif %} px-1 pt-1 pb-1 text-sm font-medium">Nodes</a>
-                        <a href="{{ url_for('members') }}" class="{% if request.endpoint == 'members' %}border-primary text-primary border-b-2{% else %}border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-100 border-b-2{% endif %} px-1 pt-1 pb-1 text-sm font-medium">Members</a>
-                        <a href="{{ url_for('contact') }}" class="{% if request.endpoint == 'contact' %}border-primary text-primary border-b-2{% else %}border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-100 border-b-2{% endif %} px-1 pt-1 pb-1 text-sm font-medium">Contact</a>
+                    <div class="nav-desktop">
+                        <a href="{{ url_for('home') }}" class="nav-link {% if request.endpoint == 'home' %}nav-link-active{% else %}nav-link-inactive{% endif %}">Home</a>
+                        <a href="{{ url_for('nodes') }}" class="nav-link {% if request.endpoint == 'nodes' %}nav-link-active{% else %}nav-link-inactive{% endif %}">Nodes</a>
+                        <a href="{{ url_for('members') }}" class="nav-link {% if request.endpoint == 'members' %}nav-link-active{% else %}nav-link-inactive{% endif %}">Members</a>
+                        <a href="{{ url_for('contact') }}" class="nav-link {% if request.endpoint == 'contact' %}nav-link-active{% else %}nav-link-inactive{% endif %}">Contact</a>
                     </div>
                 </div>
                 
                 <!-- Dark mode toggle and mobile menu button -->
-                <div class="flex items-center space-x-4">
+                <div class="nav-right">
                     <!-- Dark mode toggle -->
-                    <button @click="darkMode = !darkMode" class="p-2 rounded-md text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-100">
-                        <svg x-show="!darkMode" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <button @click="darkMode = !darkMode" class="nav-theme-toggle">
+                        <svg x-show="!darkMode" class="nav-theme-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                         </svg>
-                        <svg x-show="darkMode" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg x-show="darkMode" class="nav-theme-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                         </svg>
                     </button>
                     
                     <!-- Mobile menu button -->
-                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden p-2 rounded-md text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-100">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="nav-mobile-btn">
+                        <svg class="nav-mobile-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path x-show="!mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                             <path x-show="mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                         </svg>
@@ -106,12 +89,12 @@
             </div>
             
             <!-- Mobile Navigation -->
-            <div x-show="mobileMenuOpen" class="md:hidden">
-                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gray-200 dark:border-gray-700">
-                    <a href="{{ url_for('home') }}" class="{% if request.endpoint == 'home' %}bg-primary text-white{% else %}text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700{% endif %} block px-3 py-2 rounded-md text-base font-medium">Home</a>
-                    <a href="{{ url_for('nodes') }}" class="{% if request.endpoint == 'nodes' %}bg-primary text-white{% else %}text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700{% endif %} block px-3 py-2 rounded-md text-base font-medium">Nodes</a>
-                    <a href="{{ url_for('members') }}" class="{% if request.endpoint == 'members' %}bg-primary text-white{% else %}text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700{% endif %} block px-3 py-2 rounded-md text-base font-medium">Members</a>
-                    <a href="{{ url_for('contact') }}" class="{% if request.endpoint == 'contact' %}bg-primary text-white{% else %}text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700{% endif %} block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+            <div x-show="mobileMenuOpen" class="nav-mobile-menu">
+                <div class="nav-mobile-content">
+                    <a href="{{ url_for('home') }}" class="nav-mobile-link {% if request.endpoint == 'home' %}nav-mobile-link-active{% else %}nav-mobile-link-inactive{% endif %}">Home</a>
+                    <a href="{{ url_for('nodes') }}" class="nav-mobile-link {% if request.endpoint == 'nodes' %}nav-mobile-link-active{% else %}nav-mobile-link-inactive{% endif %}">Nodes</a>
+                    <a href="{{ url_for('members') }}" class="nav-mobile-link {% if request.endpoint == 'members' %}nav-mobile-link-active{% else %}nav-mobile-link-inactive{% endif %}">Members</a>
+                    <a href="{{ url_for('contact') }}" class="nav-mobile-link {% if request.endpoint == 'contact' %}nav-mobile-link-active{% else %}nav-mobile-link-inactive{% endif %}">Contact</a>
                 </div>
             </div>
         </div>
@@ -123,42 +106,42 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 dark:bg-gray-900 text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-3 gap-8">
-                <div>
-                    <div class="flex items-center mb-4">
-                        <span class="ml-2 text-xl font-bold">IPNet: Ipswich Mesh Network</span>
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-brand-header">
+                        <span class="footer-brand-text">IPNet: Ipswich Mesh Network</span>
                     </div>
-                    <p class="text-gray-300">
+                    <p class="footer-brand-description">
                         Connecting Ipswich through decentralized mesh networking.
                     </p>
                 </div>
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
-                    <ul class="space-y-2">
-                        <li><a href="{{ url_for('home') }}" class="text-gray-300 hover:text-white">Home</a></li>
-                        <li><a href="{{ url_for('nodes') }}" class="text-gray-300 hover:text-white">Network Map</a></li>
-                        <li><a href="{{ url_for('members') }}" class="text-gray-300 hover:text-white">Members</a></li>
-                        <li><a href="{{ url_for('contact') }}" class="text-gray-300 hover:text-white">Contact</a></li>
+                <div class="footer-section">
+                    <h3 class="footer-section-title">Quick Links</h3>
+                    <ul class="footer-nav-list">
+                        <li><a href="{{ url_for('home') }}" class="footer-nav-link">Home</a></li>
+                        <li><a href="{{ url_for('nodes') }}" class="footer-nav-link">Network Map</a></li>
+                        <li><a href="{{ url_for('members') }}" class="footer-nav-link">Members</a></li>
+                        <li><a href="{{ url_for('contact') }}" class="footer-nav-link">Contact</a></li>
                     </ul>
                 </div>
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Connect</h3>
-                    <div class="flex space-x-4">
-                        <a href="https://discord.gg/hXRM2cJgtf" class="text-gray-300 hover:text-white">
+                <div class="footer-section">
+                    <h3 class="footer-section-title">Connect</h3>
+                    <div class="footer-social-links">
+                        <a href="https://discord.gg/hXRM2cJgtf" class="footer-social-link">
                             Discord
                         </a>
-                        <a href="https://github.com/jinglemansweep/ipet" class="text-gray-300 hover:text-white">
+                        <a href="https://github.com/jinglemansweep/ipet" class="footer-social-link">
                             GitHub
                         </a>
-                        <a href="mailto:info@ipnt.uk" class="text-gray-300 hover:text-white">
+                        <a href="mailto:info@ipnt.uk" class="footer-social-link">
                             Email
                         </a>
                     </div>
                 </div>
             </div>
-            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-300">
+            <div class="footer-bottom">
                 <p>&copy; IPNet. Open source community project.</p>
             </div>
         </div>

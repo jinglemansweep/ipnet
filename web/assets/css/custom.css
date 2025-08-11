@@ -304,6 +304,54 @@ select:focus {
     margin-left: 0.125rem;
 }
 
+/* Page header styles */
+.page-header {
+    background-color: #f9fafb;
+    padding: 2rem 0;
+}
+
+.dark .page-header {
+    background-color: #1f2937;
+}
+
+.page-header-container {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+@media (min-width: 640px) {
+    .page-header-container {
+        padding: 0 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .page-header-container {
+        padding: 0 2rem;
+    }
+}
+
+.page-title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #111827;
+    line-height: 2.25rem;
+}
+
+.dark .page-title {
+    color: #f9fafb;
+}
+
+.page-subtitle {
+    margin-top: 0.5rem;
+    color: #4b5563;
+}
+
+.dark .page-subtitle {
+    color: #d1d5db;
+}
+
 /* Custom marker cluster styles */
 .marker-cluster-small {
     background-color: rgba(16, 185, 129, 0.2);
