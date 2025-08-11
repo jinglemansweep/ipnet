@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}IPNet - Ipswich Mesh Network{% endblock %}
+{% block description %}Local MeshCore community group serving Ipswich, Suffolk. Join our mesh network and connect with local enthusiasts.{% endblock %}
+
+{% block alpine_data %} x-data="homeData()"{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="bg-gradient-to-r from-primary to-accent py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
+            IPNet: Ipswich Mesh Network
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-100 mb-8 max-w-3xl mx-auto">
+            Local MeshCore community group serving Ipswich, Suffolk, UK. Connect with us through decentralized mesh networking.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="{{ url_for('nodes') }}" class="bg-white text-primary px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                View Network Map
+            </a>
+            <a href="{{ url_for('contact') }}" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary transition-colors">
+                Join Our Group
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Statistics Section -->
+<div class="py-16 bg-gray-50 dark:bg-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+            <div class="text-center">
+                <div class="text-3xl md:text-4xl font-bold text-primary" x-text="stats.totalNodes">{{ stats.totalNodes }}</div>
+                <div class="text-gray-600 dark:text-gray-300 mt-2">Active Nodes</div>
+            </div>
+            <div class="text-center">
+                <div class="text-3xl md:text-4xl font-bold text-primary" x-text="stats.totalMembers">{{ stats.totalMembers }}</div>
+                <div class="text-gray-600 dark:text-gray-300 mt-2">Members</div>
+            </div>
+            <div class="text-center">
+                <div class="text-3xl md:text-4xl font-bold text-primary" x-text="stats.coverageArea">{{ stats.coverageArea }}</div>
+                <div class="text-gray-600 dark:text-gray-300 mt-2">km² Coverage</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- About Section -->
+<div class="py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+                About MeshCore
+            </h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300">
+                Discover the power of decentralized communication
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+            <div>
+                <h3 class="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+                    What is MeshCore?
+                </h3>
+                <p class="text-gray-600 dark:text-gray-300 mb-4">
+                    MeshCore is an open-source project that enables you to use inexpensive LoRa radios as a long-range mesh communication platform. Perfect for hiking, camping, or emergency communications.
+                </p>
+                <p class="text-gray-600 dark:text-gray-300 mb-6">
+                    Our local group maintains a network of nodes across Ipswich, Suffolk, UK, providing coverage and support for the community.
+                </p>
+                <a href="https://meshcore.co.uk" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-primary hover:text-accent">
+                    Learn more about MeshCore
+                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                    </svg>
+                </a>
+            </div>
+            <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-8 text-center">
+                <div class="text-6xl mb-4">📡</div>
+                <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                    Join Our Network
+                </h4>
+                <p class="text-gray-600 dark:text-gray-300">
+                    Get started with your own MeshCore/Meshtastic device and connect to our local mesh network today.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,334 @@
+{% extends "base.html" %}
+
+{% block title %}Network Nodes - IPNet{% endblock %}
+{% block description %}Interactive map and listing of all public MeshCore nodes in the IPNet network.{% endblock %}
+
+{% block extra_head %}
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<!-- Leaflet MarkerCluster CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
+{% endblock %}
+
+{% block alpine_data %} x-data="nodesData()"{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="bg-gray-50 dark:bg-gray-800 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Individual Node Header -->
+        {% if current_node %}
+        <div x-data="{ currentNode: {{ current_node | tojson }}, showingIndividualNode: {{ showing_individual_node | tojson }} }">
+            <nav class="flex mb-4" aria-label="Breadcrumb">
+                <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                    <li class="inline-flex items-center">
+                        <a href="{{ url_for('nodes') }}" class="inline-flex items-center text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary">
+                            Network Nodes
+                        </a>
+                    </li>
+                    <li>
+                        <div class="flex items-center">
+                            <svg class="w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                            </svg>
+                            <span class="ml-1 text-sm font-medium text-gray-500 dark:text-gray-400">{{ current_node.area }}</span>
+                        </div>
+                    </li>
+                    <li aria-current="page">
+                        <div class="flex items-center">
+                            <svg class="w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                            </svg>
+                            <span class="ml-1 text-sm font-medium text-gray-500 dark:text-gray-400">{{ current_node.name }}</span>
+                        </div>
+                    </li>
+                </ol>
+            </nav>
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100">{{ current_node.name }}</h1>
+            <p class="mt-2 text-gray-600 dark:text-gray-300">{{ current_node.location.description }}, {{ current_node.area }}</p>
+        </div>
+        {% else %}
+        <!-- Default Header -->
+        <div>
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100">Network Nodes</h1>
+            <p class="mt-2 text-gray-600 dark:text-gray-300">Interactive map and details of all public nodes in our mesh network</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% if not current_node %}
+<!-- Filters -->
+<div class="py-6 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-wrap gap-4">
+            <div class="flex items-center space-x-2">
+                <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Hardware:</label>
+                <select x-model="selectedHardware" @change="applyFilters()" class="form-select text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-md">
+                    <option value="">All</option>
+                    <template x-for="hardware in availableHardware" :key="hardware">
+                        <option :value="hardware" x-text="hardware"></option>
+                    </template>
+                </select>
+            </div>
+            <div class="flex items-center space-x-2">
+                <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Role:</label>
+                <select x-model="selectedRole" @change="applyFilters()" class="form-select text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-md">
+                    <option value="">All</option>
+                    <option value="client">Client</option>
+                    <option value="repeater">Repeater</option>
+                    <option value="room">Room</option>
+                    <option value="integration">Integration</option>
+                    <option value="test">Testing</option>
+                </select>
+            </div>
+            <div class="flex items-center space-x-2">
+                <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Maintainer:</label>
+                <select x-model="selectedOwner" @change="applyFilters()" class="form-select text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-md">
+                    <option value="">All</option>
+                    <template x-for="owner in availableOwners" :key="owner">
+                        <option :value="owner" x-text="owner.toUpperCase()"></option>
+                    </template>
+                </select>
+            </div>
+            <div class="flex items-center space-x-2">
+                <input type="checkbox" x-model="showOnlineOnly" @change="applyFilters()" id="onlineOnly" class="form-checkbox text-primary border-gray-300 dark:border-gray-600 rounded">
+                <label for="onlineOnly" class="text-sm font-medium text-gray-700 dark:text-gray-300">Online only</label>
+            </div>
+            <div class="flex items-center space-x-2">
+                <input type="checkbox" x-model="showTesting" @change="applyFilters()" id="showTesting" class="form-checkbox text-primary border-gray-300 dark:border-gray-600 rounded">
+                <label for="showTesting" class="text-sm font-medium text-gray-700 dark:text-gray-300">Show testing nodes</label>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if current_node %}
+<!-- Individual Node Details -->
+<div class="py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+            <div class="px-6 py-8">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center">
+                        <div class="{% if current_node.isOnline %}bg-green-500{% else %}bg-red-500{% endif %} w-4 h-4 rounded-full mr-3"></div>
+                        <span class="{% if current_node.isOnline %}text-green-600 dark:text-green-400{% else %}text-red-600 dark:text-red-400{% endif %} text-lg font-semibold">
+                            {% if current_node.isOnline %}Online{% else %}Offline{% endif %}
+                        </span>
+                    </div>
+                    <a href="{{ url_for('nodes') }}" class="text-gray-500 dark:text-gray-400 hover:text-primary">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Node Information</h3>
+                            <div class="mt-2 space-y-3">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-300">ID:</span>
+                                    <code class="text-gray-900 dark:text-gray-100 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded text-sm font-mono">{{ current_node.id }}</code>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-300">Name:</span>
+                                    <span class="text-gray-900 dark:text-gray-100 font-medium">{{ current_node.name }}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-300">Area:</span>
+                                    <span class="text-gray-900 dark:text-gray-100 font-medium">{{ current_node.area }}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-300">Role:</span>
+                                    <span class="text-gray-900 dark:text-gray-100 font-medium capitalize">{{ current_node.meshRole }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Hardware</h3>
+                            <div class="mt-2 space-y-3">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-300">Model:</span>
+                                    <span class="text-gray-900 dark:text-gray-100 font-medium">{{ current_node.hardware }}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-300">Antenna:</span>
+                                    <span class="text-gray-900 dark:text-gray-100 font-medium">{{ current_node.antenna }}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-300">Elevation:</span>
+                                    <span class="text-gray-900 dark:text-gray-100 font-medium">{{ current_node.elevation }}m</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Location</h3>
+                            <div class="mt-2 space-y-3">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-300">Description:</span>
+                                    <span class="text-gray-900 dark:text-gray-100 font-medium">{{ current_node.location.description }}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-300">Coordinates:</span>
+                                    <span class="text-gray-900 dark:text-gray-100 font-mono text-sm">
+                                        {{ "%.6f"|format(current_node.location.lat) }}, {{ "%.6f"|format(current_node.location.lng) }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Ownership</h3>
+                            <div class="mt-2 space-y-3">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-300">Owner:</span>
+                                    <a href="{{ url_for('members') }}" class="text-primary hover:text-accent font-medium uppercase">{{ current_node.memberId }}</a>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-300">Public Key:</span>
+                                    <code class="text-gray-900 dark:text-gray-100 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded text-xs font-mono break-all">{{ current_node.publicKey or 'Not available' }}</code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-600">
+                    <a href="{{ url_for('nodes') }}" class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-opacity-90 transition-colors">
+                        ← Back to Node Directory
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Map Section -->
+<div class="py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+            <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Network Map</h2>
+                <p class="text-sm text-gray-600 dark:text-gray-300">Interactive map showing all registered nodes</p>
+            </div>
+            <div class="h-[50vh] lg:h-[75vh]">
+                <div id="nodesMap" class="h-full w-full"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if not current_node %}
+<!-- Node Statistics -->
+<div class="py-8 bg-gray-50 dark:bg-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div class="bg-white dark:bg-gray-700 rounded-lg p-6 text-center">
+                <div class="text-2xl font-bold text-primary" x-text="filteredNodes.length">{{ nodes|length }}</div>
+                <div class="text-sm text-gray-600 dark:text-gray-300 mt-1">Total Nodes</div>
+            </div>
+            <div class="bg-white dark:bg-gray-700 rounded-lg p-6 text-center">
+                <div class="text-2xl font-bold text-green-500" x-text="onlineNodesCount">{{ nodes|selectattr('isOnline')|list|length }}</div>
+                <div class="text-sm text-gray-600 dark:text-gray-300 mt-1">Online</div>
+            </div>
+            <div class="bg-white dark:bg-gray-700 rounded-lg p-6 text-center">
+                <div class="text-2xl font-bold text-blue-500" x-text="repeaterNodesCount">{{ nodes|selectattr('meshRole', 'equalto', 'repeater')|list|length }}</div>
+                <div class="text-sm text-gray-600 dark:text-gray-300 mt-1">Repeaters</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Nodes List -->
+<div class="py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mb-6">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">Node Directory</h2>
+            <p class="text-gray-600 dark:text-gray-300">Complete listing of all registered nodes in the network</p>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3" x-show="filteredNodes && filteredNodes.length > 0">
+            <template x-for="node in filteredNodes" :key="node.id">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100" x-text="node.name"></h3>
+                            <div class="flex items-center">
+                                <div :class="node.isOnline !== false ? 'bg-green-500' : 'bg-red-500'" class="w-3 h-3 rounded-full mr-2"></div>
+                                <span :class="node.isOnline !== false ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'" class="text-sm font-medium" x-text="node.isOnline !== false ? 'Online' : 'Offline'"></span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="font-semibold text-gray-900 dark:text-gray-100" x-text="node.location.description + ', ' + node.area"></span>
+                        </div>
+
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-gray-500 dark:text-gray-400">ID:</span>
+                                <code class="text-gray-900 dark:text-gray-100 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded text-xs" x-text="node.id"></code>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-500 dark:text-gray-400">Name:</span>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="node.name"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-500 dark:text-gray-400">Hardware:</span>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="node.hardware"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-500 dark:text-gray-400">Role:</span>
+                                <span class="text-gray-900 dark:text-gray-100 capitalize" x-text="node.meshRole"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-500 dark:text-gray-400">Owner:</span>
+                                <a href="{{ url_for('members') }}">
+                                    <span class="text-gray-900 dark:text-gray-100 uppercase" x-text="node.memberId"></span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
+                            <div class="flex items-center justify-between">
+                                <div class="text-xs text-gray-500 dark:text-gray-400">
+                                    <span x-text="node.location.lat.toFixed(6)"></span>, <span x-text="node.location.lng.toFixed(6)"></span>
+                                </div>
+                                <button @click="focusNodeOnMap(node)" class="text-primary hover:text-accent text-sm font-medium">
+                                    View Node Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <div x-show="filteredNodes && filteredNodes.length === 0" class="text-center py-8">
+            <div class="text-gray-500 dark:text-gray-400">
+                <svg class="mx-auto h-12 w-12 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                <p class="text-lg font-medium mb-2">No nodes found</p>
+                <p>Try adjusting your filters to see more results.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_scripts %}
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<!-- Leaflet MarkerCluster JS -->
+<script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+{% endblock %}
