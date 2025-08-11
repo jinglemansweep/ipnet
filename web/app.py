@@ -41,6 +41,12 @@ def home():
     
     return render_template('index.html', config=config, nodes=nodes, members=members, stats=stats)
 
+@app.route('/<area>/<node_id>')
+def redirect_to_nodes(area, node_id):
+    """Redirect short URL format to full nodes URL"""
+    from flask import redirect, url_for
+    return redirect(url_for('nodes', area=area, node_id=node_id), code=301)
+
 @app.route('/nodes/')
 @app.route('/nodes/<area>/<node_id>')
 def nodes(area=None, node_id=None):

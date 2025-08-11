@@ -75,38 +75,12 @@ function homeData() {
     }
 }
 
-// Client-side routing utilities
+// Simple navigation utilities
 const Router = {
-    // Parse URL parameters
-    getUrlParams() {
-        const params = new URLSearchParams(window.location.search);
-        return {
-            area: params.get('area'),
-            node: params.get('node')
-        };
-    },
-    
-    // Update URL without page reload
-    updateUrl(area, nodeId) {
-        const url = `/${area}/${nodeId}`;
-        history.pushState({ area, nodeId }, '', url);
-    },
-    
     // Navigate to node route
     navigateToNode(area, nodeId) {
-        this.updateUrl(area, nodeId);
-        // Trigger custom event for components to listen to
-        window.dispatchEvent(new CustomEvent('routechange', { 
-            detail: { area, nodeId } 
-        }));
-    },
-    
-    // Navigate back to nodes list
-    navigateToNodes() {
-        history.pushState({}, '', '/nodes/');
-        window.dispatchEvent(new CustomEvent('routechange', { 
-            detail: { area: null, nodeId: null } 
-        }));
+        const url = `/nodes/${area}/${nodeId}`;
+        window.location.href = url;
     }
 };
 
@@ -125,9 +99,6 @@ function nodesData() {
         map: null,
         markers: [],
         markerClusterGroup: null,
-        // Routing state
-        currentNode: null,
-        showingIndividualNode: false,
         
         async init() {
             const data = await loadData();
@@ -136,24 +107,6 @@ function nodesData() {
             
             // Make this component globally accessible for popup buttons
             window.nodesPageInstance = this;
-            
-            // Check for routing parameters
-            this.handleRouting();
-            
-            // Listen for browser navigation
-            window.addEventListener('popstate', () => {
-                this.handleRouting();
-            });
-            
-            // Listen for custom route changes
-            window.addEventListener('routechange', (e) => {
-                const { area, nodeId } = e.detail;
-                if (area && nodeId) {
-                    this.showNode(area, nodeId);
-                } else {
-                    this.showNodesList();
-                }
-            });
             
             this.applyFilters();
             
@@ -165,76 +118,14 @@ function nodesData() {
             });
         },
         
-        // Handle routing based on URL parameters or query strings
-        handleRouting() {
-            const urlParams = Router.getUrlParams();
-            
-            if (urlParams.area && urlParams.node) {
-                this.showNode(urlParams.area, urlParams.node);
-            } else {
-                this.showNodesList();
-            }
-        },
-        
-        // Show individual node
-        showNode(area, nodeId) {
-            const node = this.nodes.find(n => n.id === nodeId || n.id === `${nodeId}.${area}.ipnt.uk`);
-            if (node) {
-                this.currentNode = node;
-                this.showingIndividualNode = true;
-                // Focus will happen automatically after map initialization
-            } else {
-                // Node not found, redirect to nodes list
-                this.showNodesList();
-            }
-        },
-        
-        // Focus map on current node with enhanced zoom and highlighting
-        focusMapOnCurrentNode() {
-            if (this.map && this.currentNode && this.currentNode.location) {
-                const lat = this.currentNode.location.lat;
-                const lng = this.currentNode.location.lng;
-                
-                // Update markers to disable clustering for individual view
-                this.updateMapMarkers();
-                
-                // Simple center without height adjustments since map height is consistent
-                this.map.invalidateSize(true);
-                this.map.setView([lat, lng], 20);
-            }
-        },
-        
-        // Show nodes list
-        showNodesList() {
-            this.showingIndividualNode = false;
-            this.currentNode = null;
-            // Close any open popups
-            if (this.map) {
-                this.map.closePopup();
-                // Handle map resize when returning to full view
-                this.$nextTick(() => {
-                    setTimeout(() => {
-                        this.map.invalidateSize();
-                        this.fitMapToNodes();
-                    }, 100);
-                });
-            } else {
-                this.fitMapToNodes();
-            }
-        },
-        
-        // Navigate to a specific node (called from UI)
-        navigateToNode(node) {
+        // Navigate to node details page (simpler server-side approach)
+        navigateToNodeDetails(node) {
             const nodeIdParts = node.id.split('.');
             const shortId = nodeIdParts[0]; // e.g. "rep01" from "rep01.ip3.ipnt.uk"
             const area = node.area.toLowerCase(); // e.g. "ip3"
             
-            Router.navigateToNode(area, shortId);
-        },
-        
-        // Navigate back to nodes list (called from UI)
-        navigateToNodesList() {
-            Router.navigateToNodes();
+            // Direct navigation to server route
+            window.location.href = `/nodes/${area}/${shortId}`;
         },
         
         get availableHardware() {
@@ -330,11 +221,6 @@ function nodesData() {
                     
                     this.updateMapMarkers();
                     this.fitMapToNodes();
-                    
-                    // Check if we need to focus on a specific node (for direct URL access)
-                    if (this.currentNode && this.showingIndividualNode) {
-                        this.focusMapOnCurrentNode();
-                    }
                 }, 100);
             });
         },
@@ -379,8 +265,8 @@ function nodesData() {
                 this.markers = [];
             }
             
-            // Disable clustering when viewing individual node
-            const useClusterGroup = this.markerClusterGroup && !this.showingIndividualNode;
+            // Use cluster group if available
+            const useClusterGroup = this.markerClusterGroup;
             
             // Add markers for filtered nodes
             this.filteredNodes.forEach(node => {
@@ -421,7 +307,7 @@ function nodesData() {
                                     -->
                                 </div>
                                 <div class="mt-3 pt-2 border-t border-gray-200">
-                                    <button onclick="window.nodesPageInstance.focusNodeOnMap({id: '${node.id}', location: {lat: ${node.location.lat}, lng: ${node.location.lng}}, area: '${node.area}', name: '${node.name}'})" class="text-primary hover:text-accent text-sm font-medium">
+                                    <button onclick="window.nodesPageInstance.navigateToNodeDetails({id: '${node.id}', area: '${node.area}'})" class="text-primary hover:text-accent text-sm font-medium">
                                         View Node Details
                                     </button>
                                 </div>

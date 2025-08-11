@@ -19,7 +19,7 @@
     <div class="page-header-container">
         <!-- Individual Node Header -->
         {% if current_node %}
-        <div x-data="{ currentNode: {{ current_node | tojson }}, showingIndividualNode: {{ showing_individual_node | tojson }} }">
+        <div>
             <nav class="flex mb-4" aria-label="Breadcrumb">
                 <ol class="inline-flex items-center space-x-1 md:space-x-3">
                     <li class="inline-flex items-center">
@@ -302,7 +302,7 @@
                                 <div class="node-card-coordinates">
                                     <span x-text="node.location.lat.toFixed(6)"></span>, <span x-text="node.location.lng.toFixed(6)"></span>
                                 </div>
-                                <button @click="focusNodeOnMap(node)" class="node-card-btn">
+                                <button @click="navigateToNodeDetails(node)" class="node-card-btn">
                                     View Node Details
                                 </button>
                             </div>
